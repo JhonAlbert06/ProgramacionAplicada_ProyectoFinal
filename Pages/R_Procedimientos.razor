@@ -1,0 +1,159 @@
+@page "/R_Procedimiento"
+
+<EditForm Model="procedimiento" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+
+    <div class="container-sm row-cols-md-1">
+
+        <div class="card shadow-lg">
+
+            <div class="card-header">
+                <h3 class="card-title">Registro de Pacientes</h3>
+            </div>
+
+            <div class="card-body">
+
+                @* Buscar *@
+                <div class="form-group align-items-Center">
+                    <div class="form-row">
+                        <label>Buscar</label>
+
+                        <div class="input-group mb-3">
+
+                            <span class="input-group-text" id="basic-addon2">Producto Id: </span>
+                            <InputNumber @bind-Value="procedimiento.ProcedimientoId" class="form-control" />
+
+                            <div class="input-group-append col">
+                                <button type="button" class="btn btn-success" @onclick="Buscar">
+                                    <span class="oi oi-magnifying-glass">Buscar</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <ValidationMessage For="@(() => procedimiento.ProcedimientoId)" />
+                    </div>
+                </div>
+
+                <hr>
+
+                @* Nombre *@                 
+                <div class="row">
+                   
+                    <div class="form-group col">
+                        <label>Nombre </label>
+                        <InputText class="form-control" @bind-Value="procedimiento.Nombre"
+                            placeholder="ej; Limpieza" />
+                        <ValidationMessage For="@(() => procedimiento.Nombre)" />
+                    </div>
+
+                </div>
+
+                @* Descripcion *@
+                <div class="row">
+                    
+                    <div class="form-group col">
+                        <label>Descripcion </label>
+                        <InputTextArea class="form-control" @bind-Value="procedimiento.Descripcion"
+                            placeholder="Escriba aqui si descricion... " />
+                        <ValidationMessage For="@(() => procedimiento.Descripcion)" />
+                    </div>
+
+                </div>
+
+                @* Precio *@
+                <div class="row">
+                    
+                    <div class="form-group col">
+                        <label>Precio </label>
+                        <InputNumber class="form-control" @bind-Value="procedimiento.Precio" />
+                        <ValidationMessage For="@(() => procedimiento.Precio)" />
+                    </div>
+
+                </div>
+                <br>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    @* Botones *@
+    <div class="card-footer">
+        <div class="form-group text-center" display: inline-block>
+
+            <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
+                <span class="oi oi-plus"> Nuevo</span>
+            </button>
+
+            <button type="submit" class="btn btn-lg btn-success">
+                <span class="oi oi-folder"> Guardar</span>
+            </button>
+
+            <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
+                <span class="oi oi-trash"> Eliminar</span>
+            </button>
+        </div>
+    </div>
+
+</EditForm>
+
+@code {
+
+    public Procedimiento procedimiento { get; set; } = new Procedimiento();
+
+    protected override void OnInitialized()
+    {
+
+    }
+
+    public void Buscar()
+    {
+        /* if (this.producto.ProductoId > 0)
+        {
+        Productos encontrado = productosBLL.Buscar(this.producto.ProductoId);
+
+        if (encontrado != null)
+        {
+        this.producto = encontrado;
+        }
+        else
+        {
+        toastService.ShowError("No se encontró el producto");
+        }
+        } */
+    }
+    public void Nuevo()
+    {
+        //producto = new Productos();
+    }
+
+    public void Guardar()
+    {
+        /* if (productosBLL.Guardar(producto))
+        {
+        Nuevo();
+        toastService.ShowInfo("Se guardó exitosamente");
+        }
+        else
+        toastService.ShowError("No se pudo guardar.");
+        */
+    }
+    public void Eliminar()
+    {
+        /* if (productosBLL.Eliminar(producto.ProductoId))
+        {
+        Nuevo();
+        toastService.ShowSuccess("Eliminación exitosa");
+        }
+        else
+        {
+        toastService.ShowError("Eliminación fallida");
+        } */
+    }
+
+}
