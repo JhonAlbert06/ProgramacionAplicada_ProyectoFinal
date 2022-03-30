@@ -1,4 +1,7 @@
 @page "/R_Procedimiento"
+@* @page "/R_Procedimiento/{ProcedimientoId:int}" *@
+
+@* @inject IToastService toastService *@
 
 <EditForm Model="procedimiento" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
