@@ -4,33 +4,48 @@
 @* @inject IToastService toastService *@
 
 <EditForm Model="paciente" OnValidSubmit="Guardar">
-    @*
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-    *@
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-    @* Buscar *@
-    <div class="form-group align-items-Center">
-        <div class="form-row">
-            <label>Buscar</label>
-            
-            <div class="input-group mb-3">
-                
-                <span class="input-group-text" id="basic-addon2">Producto Id: </span>
-                <InputNumber @bind-Value="paciente.PacienteId" class="form-control" />
-                
-                <div class="input-group-append col">
-                    <button type="button" class="btn btn-success" @onclick="Buscar">
-                        <span class="oi oi-magnifying-glass">Buscar</span>
-                    </button>
+
+    <div class="container-sm row-cols-md-1">
+
+        <div class="card shadow-lg">
+
+            <div class="card-header">
+                <h3 class="card-title">Registro de Pacientes</h3>
+            </div>
+
+            @* Buscar *@
+            <div class="form-group align-items-Center">
+                <div class="form-row">
+                    <label>Buscar</label>
+
+                    <div class="input-group mb-3">
+
+                        <span class="input-group-text" id="basic-addon2">Producto Id: </span>
+                        <InputNumber @bind-Value="paciente.PacienteId" class="form-control" />
+
+                        <div class="input-group-append col">
+                            <button type="button" class="btn btn-success" @onclick="Buscar">
+                                <span class="oi oi-magnifying-glass">Buscar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <ValidationMessage For="@(() => paciente.PacienteId)" />
                 </div>
             </div>
 
-            <ValidationMessage For="@(() => paciente.PacienteId)" />
+
+
+
+
         </div>
+
     </div>
 
-    
+
 
     @* Botones *@
     <div class="card-footer">
