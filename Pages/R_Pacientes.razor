@@ -75,7 +75,7 @@
                     @* Direccion *@                    
                     <div class="form-group col">
                         <label>Direccion: </label>
-                        <InputText class="form-control" @bind-Value="paciente.Direccion"
+                        <InputText class="form-control" @bind-Value="paciente.Direccion" data-bv-emailaddress-message="The value is not a valid email address"
                             placeholder="ej; Provincia/Ciudad/Calle" />
                         <ValidationMessage For="@(() => paciente.Direccion)" />
                     </div>
@@ -128,7 +128,7 @@
                             placeholder="ej; 000-0000000-0" />
                         <ValidationMessage For="@(() => paciente.Cedula)" />
                     </div>
-                    
+
                 </div>
             </div>
 
