@@ -1,0 +1,109 @@
+@page "/R_Pacientes"
+@* @page "/R_Pacientes/{PacienteId:int}" *@
+
+@* @inject IToastService toastService *@
+
+<EditForm Model="paciente" OnValidSubmit="Guardar">
+    @*
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+    *@
+
+    @* Buscar *@
+    <div class="form-group align-items-Center">
+        <div class="form-row">
+            <label>Buscar</label>
+            
+            <div class="input-group mb-3">
+                
+                <span class="input-group-text" id="basic-addon2">Producto Id: </span>
+                <InputNumber @bind-Value="paciente.PacienteId" class="form-control" />
+                
+                <div class="input-group-append col">
+                    <button type="button" class="btn btn-success" @onclick="Buscar">
+                        <span class="oi oi-magnifying-glass">Buscar</span>
+                    </button>
+                </div>
+            </div>
+
+            <ValidationMessage For="@(() => paciente.PacienteId)" />
+        </div>
+    </div>
+
+    
+
+    @* Botones *@
+    <div class="card-footer">
+        <div class="form-group text-center" display: inline-block>
+
+            <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
+                <span class="oi oi-plus"> Nuevo</span>
+            </button>
+
+            <button type="submit" class="btn btn-lg btn-success">
+                <span class="oi oi-folder"> Guardar</span>
+            </button>
+
+            <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
+                <span class="oi oi-trash"> Eliminar</span>
+            </button>
+        </div>
+    </div>
+
+</EditForm>
+
+@code {
+
+    public Paciente paciente { get; set; } = new Paciente();
+
+    protected override void OnInitialized()
+    {
+
+    }
+
+    public void Buscar()
+    {
+        /* if (this.producto.ProductoId > 0)
+        {
+        Productos encontrado = productosBLL.Buscar(this.producto.ProductoId);
+
+        if (encontrado != null)
+        {
+        this.producto = encontrado;
+        }
+        else
+        {
+        toastService.ShowError("No se encontró el producto");
+        }
+        } */
+    }
+    public void Nuevo()
+    {
+        //producto = new Productos();
+    }
+
+    public void Guardar()
+    {
+        /* if (productosBLL.Guardar(producto))
+        {
+        Nuevo();
+        toastService.ShowInfo("Se guardó exitosamente");
+        }
+        else
+        toastService.ShowError("No se pudo guardar.");
+        */
+    }
+    public void Eliminar()
+    {
+        /* if (productosBLL.Eliminar(producto.ProductoId))
+        {
+        Nuevo();
+        toastService.ShowSuccess("Eliminación exitosa");
+        }
+        else
+        {
+        toastService.ShowError("Eliminación fallida");
+        } */
+    }
+
+}
