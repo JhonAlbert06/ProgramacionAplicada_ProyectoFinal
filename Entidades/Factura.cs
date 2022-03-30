@@ -12,6 +12,7 @@ namespace ProyectoFinal_JhonAlbert.Entidades
         public float Monto { get; set; }
         public string? Aseguradora { get; set; }
 
-        // Factura Detalle
+        [ForeignKey("FacturaId")]
+        public List<FacturaDetalle> Detalle { get; set; } = new List<FacturaDetalle> ();
     }
 }
