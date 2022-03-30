@@ -83,17 +83,48 @@
                     @* Apellido *@
                     <div class="form-group col">
                         <label>Telefono: </label>
-                        <InputNumber class="form-control" @bind-Value="paciente.Telefono"
-                            placeholder="ej; 809xxxxxxx" />
+                        <InputText class="form-control" @bind-Value="paciente.Telefono"
+                            placeholder="ej; 000-000-0000" />
                         <ValidationMessage For="@(() => paciente.Telefono)" />
                     </div>
 
                     @* Email *@
                     <div class="form-group col">
                         <label>Sexo: </label>
-                        <InputText class="form-control" @bind-Value="paciente.Email"
-                            placeholder="ej; paquito02@gmail.com" />
-                        <ValidationMessage For="@(() => paciente.Email)" />
+                        <InputSelect id="SelectProductos" @bind-Value="paciente.Sexo" class="form-control">
+                            <option value=1>Hombre</option>
+                            <option value=2>Mujer</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => paciente.Sexo)" />
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    @* Estado Civil *@                    
+                    <div class="form-group col">
+                        <label>Estado Civil</label>
+                        <InputSelect id="SelectProductos" @bind-Value="paciente.EstadoCivil" class="form-control">
+                            <option value=1>Soltero</option>
+                            <option value=2>Casado</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => paciente.EstadoCivil)" />
+                    </div>
+
+                    @* Fecha de Nacimiento *@
+                    <div class="form-group col">
+                        <label>Fecha de Nacimiento: </label>
+                        <InputDate class="form-control" @bind-Value="paciente.FechaNacimiento"
+                            placeholder="ej; " />
+                        <ValidationMessage For="@(() => paciente.FechaNacimiento)" />
+                    </div>
+
+                    @* Cedula *@
+                    <div class="form-group col">
+                        <label>Cedula </label>
+                        <InputText class="form-control" @bind-Value="paciente.Cedula"
+                            placeholder="ej; 000-0000000-0" />
+                        <ValidationMessage For="@(() => paciente.Cedula)" />
                     </div>
                 </div>
             </div>
