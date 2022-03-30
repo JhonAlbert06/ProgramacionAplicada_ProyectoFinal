@@ -16,30 +16,87 @@
                 <h3 class="card-title">Registro de Pacientes</h3>
             </div>
 
-            @* Buscar *@
-            <div class="form-group align-items-Center">
-                <div class="form-row">
-                    <label>Buscar</label>
+            <div class="card-body">
 
-                    <div class="input-group mb-3">
+                @* Buscar *@
+                <div class="form-group align-items-Center">
+                    <div class="form-row">
+                        <label>Buscar</label>
 
-                        <span class="input-group-text" id="basic-addon2">Producto Id: </span>
-                        <InputNumber @bind-Value="paciente.PacienteId" class="form-control" />
+                        <div class="input-group mb-3">
 
-                        <div class="input-group-append col">
-                            <button type="button" class="btn btn-success" @onclick="Buscar">
-                                <span class="oi oi-magnifying-glass">Buscar</span>
-                            </button>
+                            <span class="input-group-text" id="basic-addon2">Producto Id: </span>
+                            <InputNumber @bind-Value="paciente.PacienteId" class="form-control" />
+
+                            <div class="input-group-append col">
+                                <button type="button" class="btn btn-success" @onclick="Buscar">
+                                    <span class="oi oi-magnifying-glass">Buscar</span>
+                                </button>
+                            </div>
                         </div>
+
+                        <ValidationMessage For="@(() => paciente.PacienteId)" />
+                    </div>
+                </div>
+
+                <hr>
+                
+                <div class="row">
+
+                    @* Nombre *@                    
+                    <div class="form-group col">
+                        <label>Nombre: </label>
+                        <InputText class="form-control" @bind-Value="paciente.Nombre"
+                            placeholder="ej; Paquito" />
+                        <ValidationMessage For="@(() => paciente.Nombre)" />
                     </div>
 
-                    <ValidationMessage For="@(() => paciente.PacienteId)" />
+                    @* Apellido *@
+                    <div class="form-group col">
+                        <label>Apellido: </label>
+                        <InputText class="form-control" @bind-Value="paciente.Apellido"
+                            placeholder="ej; Fernandez " />
+                        <ValidationMessage For="@(() => paciente.Apellido)" />
+                    </div>
+
+                    @* Email *@
+                    <div class="form-group col">
+                        <label>Email: </label>
+                        <InputText class="form-control" @bind-Value="paciente.Email"
+                            placeholder="ej; paquito02@gmail.com" />
+                        <ValidationMessage For="@(() => paciente.Email)" />
+                    </div>
+                </div>
+
+                <br>
+                
+                <div class="row">
+
+                    @* Direccion *@                    
+                    <div class="form-group col">
+                        <label>Direccion: </label>
+                        <InputText class="form-control" @bind-Value="paciente.Direccion"
+                            placeholder="ej; Provincia/Ciudad/Calle" />
+                        <ValidationMessage For="@(() => paciente.Direccion)" />
+                    </div>
+
+                    @* Apellido *@
+                    <div class="form-group col">
+                        <label>Telefono: </label>
+                        <InputNumber class="form-control" @bind-Value="paciente.Telefono"
+                            placeholder="ej; 809xxxxxxx" />
+                        <ValidationMessage For="@(() => paciente.Telefono)" />
+                    </div>
+
+                    @* Email *@
+                    <div class="form-group col">
+                        <label>Sexo: </label>
+                        <InputText class="form-control" @bind-Value="paciente.Email"
+                            placeholder="ej; paquito02@gmail.com" />
+                        <ValidationMessage For="@(() => paciente.Email)" />
+                    </div>
                 </div>
             </div>
-
-
-
-
 
         </div>
 
