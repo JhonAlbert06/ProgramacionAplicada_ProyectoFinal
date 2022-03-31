@@ -28,7 +28,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                if (_contexto.Procedimientos.Add(procedimiento) != null)
+                if (_contexto.Procedimiento.Add(procedimiento) != null)
                     paso = _contexto.SaveChanges() > 0;
             }
             catch (Exception)
@@ -70,11 +70,11 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                var procedimiento = _contexto.Procedimientos.Find(Id);
+                var procedimiento = _contexto.Procedimiento.Find(Id);
 
                 if (procedimiento != null)
                 {
-                    _contexto.Procedimientos.Remove(procedimiento);
+                    _contexto.Procedimiento.Remove(procedimiento);
                     paso = _contexto.SaveChanges() > 0;
                 }
             }
@@ -92,7 +92,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                procedimiento = _contexto.Procedimientos
+                procedimiento = _contexto.Procedimiento
                     .Where(p => p.ProcedimientoId == Id)
                     .AsNoTracking()
                     .SingleOrDefault();
@@ -111,7 +111,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                paso = _contexto.Procedimientos.Any(p => p.ProcedimientoId == Id);
+                paso = _contexto.Procedimiento.Any(p => p.ProcedimientoId == Id);
             }
             catch (Exception)
             {
@@ -127,7 +127,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                lista = _contexto.Procedimientos
+                lista = _contexto.Procedimiento
                     .Where(critero)
                     .AsNoTracking()
                     .ToList();
