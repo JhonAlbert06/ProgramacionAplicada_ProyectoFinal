@@ -162,6 +162,9 @@
 
     public Paciente paciente { get; set; } = new Paciente();
 
+    [Inject]
+    public PacienteBLL? pacienteBLL { get; set; } 
+
     protected override void OnInitialized()
     {
 
@@ -169,47 +172,49 @@
 
     public void Buscar()
     {
-        /* if (this.producto.ProductoId > 0)
+        if (this.paciente.PacienteId > 0)
         {
-        Productos encontrado = productosBLL.Buscar(this.producto.ProductoId);
+            Paciente encontrado = pacienteBLL.Buscar(this.paciente.PacienteId);
 
-        if (encontrado != null)
-        {
-        this.producto = encontrado;
+            if (encontrado != null)
+            {
+                this.paciente = encontrado;
+            }
+            else
+            {
+                //toastService.ShowError("No se encontró el producto");
+            }
         }
-        else
-        {
-        toastService.ShowError("No se encontró el producto");
-        }
-        } */
     }
+
     public void Nuevo()
     {
-        //producto = new Productos();
+        paciente = new Paciente();
     }
 
     public void Guardar()
     {
-        /* if (productosBLL.Guardar(producto))
+        if (pacienteBLL.Guardar(paciente))
         {
-        Nuevo();
-        toastService.ShowInfo("Se guardó exitosamente");
+            Nuevo();
+            //toastService.ShowInfo("Se guardó exitosamente");
         }
         else
-        toastService.ShowError("No se pudo guardar.");
-        */
+        {
+            //toastService.ShowError("No se pudo guardar.");
+        }
     }
     public void Eliminar()
     {
-        /* if (productosBLL.Eliminar(producto.ProductoId))
+        if (pacienteBLL.Eliminar(paciente.PacienteId))
         {
-        Nuevo();
-        toastService.ShowSuccess("Eliminación exitosa");
+            Nuevo();
+            //toastService.ShowSuccess("Eliminación exitosa");
         }
         else
         {
-        toastService.ShowError("Eliminación fallida");
-        } */
+            //toastService.ShowError("Eliminación fallida");
+        } 
     }
 
 }
