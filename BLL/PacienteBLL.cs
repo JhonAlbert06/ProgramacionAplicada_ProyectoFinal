@@ -28,7 +28,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                _contexto.Pacientes.Add(paciente).State = EntityState.Added;
+                _contexto.Paciente.Add(paciente).State = EntityState.Added;
                 paso = _contexto.SaveChanges() > 0;
             }
             catch (Exception)
@@ -71,11 +71,11 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                var paciente = _contexto.Pacientes.Find(Id);
+                var paciente = _contexto.Paciente.Find(Id);
 
                 if (paciente != null)
                 {
-                    _contexto.Pacientes.Remove(paciente);
+                    _contexto.Paciente.Remove(paciente);
                     paso = _contexto.SaveChanges() > 0;
                 }
             }
@@ -93,7 +93,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                paciente = _contexto.Pacientes
+                paciente = _contexto.Paciente
                     .Where(p => p.PacienteId == Id)
                     .AsNoTracking()
                     .SingleOrDefault();
@@ -112,7 +112,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                paso = _contexto.Pacientes.Any(p => p.PacienteId == Id);
+                paso = _contexto.Paciente.Any(p => p.PacienteId == Id);
             }
             catch (Exception)
             {
@@ -128,7 +128,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                lista = _contexto.Pacientes
+                lista = _contexto.Paciente
                     .Where(critero)
                     .AsNoTracking()
                     .ToList();
