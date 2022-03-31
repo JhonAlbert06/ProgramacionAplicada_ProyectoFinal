@@ -182,8 +182,13 @@
     [Inject]
     public ProcedimientoBLL procedimientoBLL { get; set; }
 
+    [Inject]
+    public PacienteBLL pacienteBLL { get; set; }
+
     protected override void OnInitialized()
     {
+        LlenarListaPacientes();
+        LlenarListaProcedimiento();
         factura.FacturaId = FacturaId;
         Buscar();
     }
@@ -261,5 +266,14 @@
         }
     }
 
+    public void LlenarListaPacientes()
+    {
+        listaPacientes = pacienteBLL.GetList(t => true);
+    }
+
+    public void LlenarListaProcedimiento()
+    {
+        listaProcedimientos = procedimientoBLL.GetList(t => true);
+    }
 
 }
