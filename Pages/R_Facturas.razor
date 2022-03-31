@@ -106,10 +106,8 @@
                         <table class="table table-secondary">
                             <thead class="thead-dark">
                                 <tr class="table-info">
-                                    <th>Detalle id</th>
-                                    <th>Procedimiento id</th>
+                                    <th>Procedimiento ID</th>
                                     <th>Procedimiento</th>
-                                    <th>Cantidad</th>
                                     <th>Precio</th>
                                 </tr>
                             </thead>
@@ -117,13 +115,14 @@
                                 @foreach (var item in factura.Detalle)
                                 {
                                     <tr>
-                                        <td>@item.FacturaDetalleId</td>
-
+                                        <td>@item.ProcedimientoId</td>
                                         <td>@item.Procedimiento</td>
-                                        @* <td>@item.Descripcion</td> *@
                                         <td>RD$ @item.Precio</td>
-                                        <td><span class="btn btn-sm btn-outline-primary oi oi-ban" href="#"
-                                            @onclick=" (() => RemoverFila(item)) "> Remover</span></td>
+                                        <td>
+                                            <span class="btn btn-sm btn-outline-primary oi oi-ban" href="#"
+                                                @onclick=" (() => RemoverFila(item)) "> Remover
+                                            </span>    
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -131,6 +130,14 @@
 
                     </form>
 
+                </div>
+
+                 @* Monto *@
+                <div class="input-group mb-2">
+                    <span class="input-group-text">
+                        Monto 
+                    </span>
+                    <InputNumber class="form-control" @bind-Value="factura.Monto" readonly />
                 </div>
 
             </div>
