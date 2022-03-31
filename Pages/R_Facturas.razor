@@ -1,0 +1,230 @@
+@page "/R_Facturas"
+@* @page "/R_Facturas/{FacturaId:int}" *@
+
+@* @inject IToastService toastService *@
+
+<EditForm Model="factura" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+
+    <div class="container-sm row-cols-md-1">
+
+        <div class="card shadow-lg">
+
+            <div class="card-header">
+                <h3 class="card-title">Registro de Facturas</h3>
+            </div>
+
+            <div class="card-body">
+
+                @* Buscar *@
+                <div class="form-group align-items-Center">
+                    <div class="form-row">
+                        <label>Buscar</label>
+
+                        <div class="input-group mb-3">
+
+                            <span class="input-group-text" id="basic-addon2">Factura Id </span>
+                            <InputNumber @bind-Value="factura.FacturaId" class="form-control" />
+
+                            <div class="input-group-append col">
+                                <button type="button" class="btn btn-success" @onclick="Buscar">
+                                    <span class="oi oi-magnifying-glass">Buscar</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <ValidationMessage For="@(() => factura.FacturaId)" />
+                    </div>
+                </div>
+                
+                <hr>
+                <hr>
+
+                @* ComboBox Productos *@
+
+                <div class="input-group mb-4">
+
+                    <span class="input-group-text" id="basic-addon2">Pacientes </span>
+                    <InputSelect id="SelectProductos" @bind-Value="factura.FacturaId" class="form-control">
+
+                        @foreach (var item in listaPacientes)
+                        {
+                            <option value="@item.PacienteId">@item.Nombre @item.Apellido</option>
+                        }
+
+                    </InputSelect>
+                    
+                    <span class="input-group-text" id="basic-addon2">Fecha </span>
+                    <InputDate readonly= class="form-control" @bind-Value="factura.FechaFactura" />
+                    
+                </div>
+
+                @* Aseguradora *@
+                <div class="form-group col">
+                    <label>Aseguradora </label>
+                    <InputText class="form-control" @bind-Value="factura.Aseguradora" placeholder="ej; Senasa"/>
+                </div>
+
+                <br>
+
+                @* Factura Detalle *@
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>Detalle</h3>
+                    </div>
+
+                    <form>
+
+                        <div class=" row align-items-end">
+
+                            @* Procedimiento *@
+                            <div class="form-group col">
+                                <label>Procedimiento</label>
+                                <InputSelect id="SelectProductos" @bind-Value="detalle.Procedimiento" class="form-control">
+
+                                    <option></option>
+
+                                    @foreach (var item in listaProcedimientos)
+                                    {
+                                        <option value="@item.Descripcion">@item.Descripcion</option>
+                                    }
+
+                                </InputSelect>
+                            </div>
+
+                            <button type="button" class="btn btn-success col" @onclick="AgregarDetalle">
+                                <span class="oi oi-plus"> Agregar</span>
+                            </button>
+
+                        </div>
+
+                        <br>
+
+                        <table class="table table-secondary">
+                            <thead class="thead-dark">
+                                <tr class="table-info">
+                                    <th>Detalle id</th>
+                                    <th>Procedimiento id</th>
+                                    <th>Procedimiento</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in factura.Detalle)
+                                {
+                                    <tr>
+                                        <td>@item.FacturaDetalleId</td>
+
+                                        <td>@item.Procedimiento</td>
+                                        @* <td>@item.Descripcion</td> *@
+                                        <td>RD$ @item.Precio</td>
+                                        <td><span class="btn btn-sm btn-outline-primary oi oi-ban" href="#"
+                                            @onclick=" (() => RemoverFila(item)) "> Remover</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    @* Botones *@
+    <div class="card-footer">
+        <div class="form-group text-center" display: inline-block>
+
+            <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
+                <span class="oi oi-plus"> Nuevo</span>
+            </button>
+
+            <button type="submit" class="btn btn-lg btn-success">
+                <span class="oi oi-folder"> Guardar</span>
+            </button>
+
+            <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
+                <span class="oi oi-trash"> Eliminar</span>
+            </button>
+        </div>
+    </div>
+
+</EditForm>
+
+@code {
+
+    public Factura factura { get; set; } = new Factura();
+    public FacturaDetalle detalle { get; set; } = new FacturaDetalle();
+    public List<Paciente> listaPacientes { get; set; } = new List<Paciente>();
+    public List<Procedimiento> listaProcedimientos { get; set; } = new List<Procedimiento>();
+    protected override void OnInitialized()
+    {
+
+    }
+
+    public void Buscar()
+    {
+        /* if (this.producto.ProductoId > 0)
+        {
+        Productos encontrado = productosBLL.Buscar(this.producto.ProductoId);
+
+        if (encontrado != null)
+        {
+        this.producto = encontrado;
+        }
+        else
+        {
+        toastService.ShowError("No se encontró el producto");
+        }
+        } */
+    }
+
+    private void RemoverFila(FacturaDetalle item)
+    {
+        
+    }
+
+    public void AgregarDetalle()
+    {}
+
+    public void Nuevo()
+    {
+        //producto = new Productos();
+    }
+
+    public void Guardar()
+    {
+        /* if (productosBLL.Guardar(producto))
+        {
+        Nuevo();
+        toastService.ShowInfo("Se guardó exitosamente");
+        }
+        else
+        toastService.ShowError("No se pudo guardar.");
+        */
+    }
+    public void Eliminar()
+    {
+        /* if (productosBLL.Eliminar(producto.ProductoId))
+        {
+        Nuevo();
+        toastService.ShowSuccess("Eliminación exitosa");
+        }
+        else
+        {
+        toastService.ShowError("Eliminación fallida");
+        } */
+    }
+
+
+}
