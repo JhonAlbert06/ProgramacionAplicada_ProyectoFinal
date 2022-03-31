@@ -1,17 +1,21 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
+using ProyectoFinal_JhonAlbert.DAL;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-/* 
+
 builder.Services.AddDbContext<Contexto>(options => 
     options.UseSqlite(builder.Configuration.GetConnectionString("ConStr"))    
 ); 
-*/
+
 
 var app = builder.Build();
 
