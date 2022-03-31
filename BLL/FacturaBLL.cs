@@ -28,7 +28,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                if (_contexto.Facturas.Add(factura) != null)
+                if (_contexto.Factura.Add(factura) != null)
                     paso = _contexto.SaveChanges() > 0;
             }
             catch (Exception)
@@ -69,11 +69,11 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                var factura = _contexto.Facturas.Find(Id);
+                var factura = _contexto.Factura.Find(Id);
 
                 if (factura != null)
                 {
-                    _contexto.Facturas.Remove(factura);
+                    _contexto.Factura.Remove(factura);
                     paso = _contexto.SaveChanges() > 0;
                 }
             }
@@ -91,7 +91,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                factura = _contexto.Facturas
+                factura = _contexto.Factura
                     .Include(x => x.Detalle)
                     .Where(p => p.FacturaId == Id)
                     .AsNoTracking()
@@ -111,7 +111,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                paso = _contexto.Facturas.Any(p => p.FacturaId == Id);
+                paso = _contexto.Factura.Any(p => p.FacturaId == Id);
             }
             catch (Exception)
             {
@@ -127,7 +127,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                lista = _contexto.Facturas
+                lista = _contexto.Factura
                     .Include(x => x.Detalle)
                     .Where(critero)
                     .AsNoTracking()
