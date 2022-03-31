@@ -28,8 +28,8 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                if (_contexto.Pacientes.Add(paciente) != null)
-                    paso = _contexto.SaveChanges() > 0;
+                _contexto.Pacientes.Add(paciente).State = EntityState.Added;
+                paso = _contexto.SaveChanges() > 0;
             }
             catch (Exception)
             {
