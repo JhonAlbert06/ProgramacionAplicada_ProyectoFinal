@@ -1,6 +1,8 @@
 @page "/R_Facturas"
 @page "/R_Facturas/{FacturaId:int}"
 
+@inject IToastService toastService
+
 <EditForm Model="factura" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -171,8 +173,8 @@
 
     public Factura factura { get; set; } = new Factura();
     public FacturaDetalle detalle { get; set; } = new FacturaDetalle();
-    public List<Paciente> listaPacientes { get; set; } = new List<Paciente>();
-    public List<Procedimiento> listaProcedimientos { get; set; } = new List<Procedimiento>();
+    public List<Paciente>? listaPacientes { get; set; } = new List<Paciente>();
+    public List<Procedimiento>? listaProcedimientos { get; set; } = new List<Procedimiento>();
     
     
     [Inject]
@@ -186,8 +188,8 @@
 
     protected override void OnInitialized()
     {
-        LlenarListaPacientes();
-        LlenarListaProcedimiento();
+        //LlenarListaPacientes();
+        //LlenarListaProcedimiento();
         factura.FacturaId = FacturaId;
         Buscar();
     }
@@ -205,7 +207,7 @@
             }
             else
             {
-                //toastService.ShowError("No se encontró la Factura...");
+                toastService.ShowError("No se encontró la Factura...");
             }
         }
     }
@@ -245,11 +247,11 @@
         if (facturaBLL.Guardar(factura))
         {
             Nuevo();
-            //toastService.ShowInfo("Se guardó exitosamente");
+            toastService.ShowInfo("Se guardó exitosamente");
         }
         else
         {
-            //toastService.ShowError("No se pudo guardar.");
+            toastService.ShowError("No se pudo guardar.");
         } 
     }
 
@@ -258,15 +260,15 @@
         if (facturaBLL.Eliminar(factura.FacturaId))
         {
             Nuevo();
-            //toastService.ShowSuccess("Eliminación exitosa");
+            toastService.ShowSuccess("Eliminación exitosa");
         }
         else
         {
-            //toastService.ShowError("Eliminación fallida");
+            toastService.ShowError("Eliminación fallida");
         }
     }
 
-    public void LlenarListaPacientes()
+    @* public void LlenarListaPacientes()
     {
         listaPacientes = pacienteBLL.GetList(t => true);
     }
@@ -274,6 +276,6 @@
     public void LlenarListaProcedimiento()
     {
         listaProcedimientos = procedimientoBLL.GetList(t => true);
-    }
+    } *@
 
 }
