@@ -2,6 +2,11 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
 using ProyectoFinal_JhonAlbert.DAL;
+using ProyectoFinal_JhonAlbert.BLL;
+
+using Blazored.Toast;
+
+
 using Microsoft.EntityFrameworkCore;
 
 
@@ -16,6 +21,10 @@ builder.Services.AddDbContext<Contexto>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("ConStr"))    
 ); 
 
+builder.Services.AddBlazoredToast();
+builder.Services.AddTransient<PacienteBLL>();
+builder.Services.AddTransient<FacturaBLL>();
+builder.Services.AddTransient<ProcedimientoBLL>();
 
 var app = builder.Build();
 
