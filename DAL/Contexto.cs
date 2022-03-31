@@ -7,8 +7,7 @@ namespace ProyectoFinal_JhonAlbert.DAL
     {
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<Factura> Facturas { get; set; }
-        public DbSet<Procedimiento> Procedimientos { get; set; }
-    
+        public DbSet<Procedimiento> Procedimientos { get; set; }    
         public Contexto(DbContextOptions<Contexto> options) : base(options){}
     }
 }
