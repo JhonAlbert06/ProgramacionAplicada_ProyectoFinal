@@ -87,7 +87,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
         public Factura Buscar(int Id)
         {
-            Factura factura;
+            Factura? factura;
 
             try
             {
