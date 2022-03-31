@@ -1,7 +1,7 @@
 @page "/R_Pacientes"
-@* @page "/R_Pacientes/{PacienteId:int}" *@
+@page "/R_Pacientes/{PacienteId:int}"
 
-@* @inject IToastService toastService *@
+@inject IToastService toastService
 
 <EditForm Model="paciente" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -160,10 +160,13 @@
 
 @code {
 
+    [Parameter]
+    public int PacienteId { get; set; }
+
     public Paciente paciente { get; set; } = new Paciente();
 
     [Inject]
-    public PacienteBLL? pacienteBLL { get; set; } 
+    public PacienteBLL pacientesBLL { get; set; }
 
     protected override void OnInitialized()
     {
@@ -174,7 +177,7 @@
     {
         if (this.paciente.PacienteId > 0)
         {
-            Paciente encontrado = pacienteBLL.Buscar(this.paciente.PacienteId);
+            Paciente encontrado = pacientesBLL.Buscar(this.paciente.PacienteId);
 
             if (encontrado != null)
             {
@@ -182,7 +185,7 @@
             }
             else
             {
-                //toastService.ShowError("No se encontró el producto");
+                toastService.ShowError("No se encontró el producto");
             }
         }
     }
@@ -194,26 +197,26 @@
 
     public void Guardar()
     {
-        if (pacienteBLL.Guardar(paciente))
+        if (pacientesBLL.Guardar(paciente))
         {
             Nuevo();
-            //toastService.ShowInfo("Se guardó exitosamente");
+            toastService.ShowInfo("Se guardó exitosamente");
         }
         else
         {
-            //toastService.ShowError("No se pudo guardar.");
+            toastService.ShowError("No se pudo guardar.");
         }
     }
     public void Eliminar()
     {
-        if (pacienteBLL.Eliminar(paciente.PacienteId))
+        if (pacientesBLL.Eliminar(paciente.PacienteId))
         {
             Nuevo();
-            //toastService.ShowSuccess("Eliminación exitosa");
+            toastService.ShowSuccess("Eliminación exitosa");
         }
         else
         {
-            //toastService.ShowError("Eliminación fallida");
+            toastService.ShowError("Eliminación fallida");
         } 
     }
 
