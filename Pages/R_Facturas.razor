@@ -47,7 +47,7 @@
                 <div class="input-group mb-4">
 
                     <span class="input-group-text" id="basic-addon2">Pacientes</span>
-                    <InputSelect id="SelectProductos" @bind-Value="factura.FacturaId" class="form-control">
+                    <InputSelect id="SelectProductos" @bind-Value="factura.PacienteId" class="form-control">
 
                         @foreach (var item in listaPacientes)
                         {
@@ -188,8 +188,8 @@
 
     protected override void OnInitialized()
     {
-        //LlenarListaPacientes();
-        //LlenarListaProcedimiento();
+        LlenarListaPacientes();
+        LlenarListaProcedimiento();
         factura.FacturaId = FacturaId;
         Buscar();
     }
@@ -268,7 +268,7 @@
         }
     }
 
-    @* public void LlenarListaPacientes()
+    public void LlenarListaPacientes()
     {
         listaPacientes = pacienteBLL.GetList(t => true);
     }
@@ -276,6 +276,6 @@
     public void LlenarListaProcedimiento()
     {
         listaProcedimientos = procedimientoBLL.GetList(t => true);
-    } *@
+    }
 
 }
