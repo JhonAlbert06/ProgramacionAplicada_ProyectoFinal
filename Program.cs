@@ -25,6 +25,7 @@ builder.Services.AddBlazoredToast();
 builder.Services.AddTransient<PacienteBLL>();
 builder.Services.AddTransient<FacturaBLL>();
 builder.Services.AddTransient<ProcedimientoBLL>();
+builder.Services.AddTransient<AseguradoraBLL>();
 
 var app = builder.Build();
 
