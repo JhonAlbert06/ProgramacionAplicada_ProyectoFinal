@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoFinal_JhonAlbert.DAL;
 
@@ -10,69 +11,13 @@ using ProyectoFinal_JhonAlbert.DAL;
 namespace ProyectoFinal_JhonAlbert.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20220401212400_Cuarta")]
+    partial class Cuarta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
-
-            modelBuilder.Entity("ProyectoFinal_JhonAlbert.Entidades.Aseguradora", b =>
-                {
-                    b.Property<int>("AseguradoraId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("AseguradoraId");
-
-                    b.ToTable("Aseguradora");
-
-                    b.HasData(
-                        new
-                        {
-                            AseguradoraId = 1,
-                            Nombre = "Senasa"
-                        },
-                        new
-                        {
-                            AseguradoraId = 2,
-                            Nombre = "Humano"
-                        },
-                        new
-                        {
-                            AseguradoraId = 3,
-                            Nombre = "Seguros Universal"
-                        },
-                        new
-                        {
-                            AseguradoraId = 4,
-                            Nombre = "Reservas"
-                        },
-                        new
-                        {
-                            AseguradoraId = 5,
-                            Nombre = "Mapfre BHD"
-                        },
-                        new
-                        {
-                            AseguradoraId = 6,
-                            Nombre = "La Monumental"
-                        },
-                        new
-                        {
-                            AseguradoraId = 7,
-                            Nombre = "Mapfre BHD"
-                        },
-                        new
-                        {
-                            AseguradoraId = 8,
-                            Nombre = "La Monumental"
-                        });
-                });
 
             modelBuilder.Entity("ProyectoFinal_JhonAlbert.Entidades.Factura", b =>
                 {
