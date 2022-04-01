@@ -15,6 +15,8 @@ namespace ProyectoFinal_JhonAlbert.Entidades
         
         [Range(0, int.MaxValue, ErrorMessage = "El Monto debe estar en el rango de {1} y {2}.")]
         public float Monto { get; set; }
+
+        [Required(ErrorMessage = "Es obligatorio introducir la Aseguradora")]
         public string? Aseguradora { get; set; }
 
         [ForeignKey("FacturaId")]

@@ -1,7 +1,7 @@
 @page "/R_Procedimiento"
-@* @page "/R_Procedimiento/{ProcedimientoId:int}" *@
+@page "/R_Procedimiento/{ProcedimientoId:int}"
 
-@* @inject IToastService toastService *@
+@inject IToastService toastService
 
 <EditForm Model="procedimiento" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -107,56 +107,63 @@
 
 @code {
 
+    [Parameter]
+    public int ProcedimientoId { get; set; }
+
     public Procedimiento procedimiento { get; set; } = new Procedimiento();
+
+    [Inject]
+    public ProcedimientoBLL procedimientoBLL { get; set; }
 
     protected override void OnInitialized()
     {
-
+        procedimiento.ProcedimientoId = ProcedimientoId;
+        Buscar();
     }
 
     public void Buscar()
     {
-        /* if (this.producto.ProductoId > 0)
+        if (this.procedimiento.ProcedimientoId > 0)
         {
-        Productos encontrado = productosBLL.Buscar(this.producto.ProductoId);
+            Procedimiento encontrado = procedimientoBLL.Buscar(this.procedimiento.ProcedimientoId);
 
-        if (encontrado != null)
-        {
-        this.producto = encontrado;
+            if (encontrado != null)
+            {
+                this.procedimiento = encontrado;
+            }
+            else
+            {
+                toastService.ShowError("No se encontró el producto");
+            }
         }
-        else
-        {
-        toastService.ShowError("No se encontró el producto");
-        }
-        } */
     }
     public void Nuevo()
     {
-        //producto = new Productos();
+        procedimiento = new Procedimiento();
     }
 
     public void Guardar()
     {
-        /* if (productosBLL.Guardar(producto))
+        if (procedimientoBLL.Guardar(procedimiento))
         {
-        Nuevo();
-        toastService.ShowInfo("Se guardó exitosamente");
+            Nuevo();
+            toastService.ShowInfo("Se guardó exitosamente");
         }
         else
-        toastService.ShowError("No se pudo guardar.");
-        */
+            toastService.ShowError("No se pudo guardar.");
+        
     }
     public void Eliminar()
     {
-        /* if (productosBLL.Eliminar(producto.ProductoId))
+        if (procedimientoBLL.Eliminar(procedimiento.ProcedimientoId))
         {
-        Nuevo();
-        toastService.ShowSuccess("Eliminación exitosa");
+            Nuevo();
+            toastService.ShowSuccess("Eliminación exitosa");
         }
         else
         {
-        toastService.ShowError("Eliminación fallida");
-        } */
+            toastService.ShowError("Eliminación fallida");
+        }
     }
 
 }

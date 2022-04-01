@@ -1,7 +1,7 @@
 @page "/R_Facturas"
-@* @page "/R_Facturas/{FacturaId:int}" *@
+@page "/R_Facturas/{FacturaId:int}"
 
-@* @inject IToastService toastService *@
+@inject IToastService toastService
 
 <EditForm Model="factura" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -46,8 +46,8 @@
 
                 <div class="input-group mb-4">
 
-                    <span class="input-group-text" id="basic-addon2">Pacientes </span>
-                    <InputSelect id="SelectProductos" @bind-Value="factura.FacturaId" class="form-control">
+                    <span class="input-group-text" id="basic-addon2">Pacientes</span>
+                    <InputSelect id="SelectProductos" @bind-Value="factura.PacienteId" class="form-control">
 
                         @foreach (var item in listaPacientes)
                         {
@@ -56,14 +56,14 @@
 
                     </InputSelect>
                     
-                    <span class="input-group-text" id="basic-addon2">Fecha </span>
+                    <span class="input-group-text" id="basic-addon2">Fecha</span>
                     <InputDate readonly= class="form-control" @bind-Value="factura.FechaFactura" />
                     
                 </div>
 
                 @* Aseguradora *@
                 <div class="form-group col">
-                    <label>Aseguradora </label>
+                    <label>Aseguradora</label>
                     <InputText class="form-control" @bind-Value="factura.Aseguradora" placeholder="ej; Senasa"/>
                 </div>
 
@@ -83,11 +83,11 @@
                             @* Procedimiento *@
                             <div class="form-group col">
                                 <label>Procedimiento</label>
-                                <InputSelect id="SelectProductos" @bind-Value="detalle.Procedimiento" class="form-control">
+                                <InputSelect id="SelectProductos" @bind-Value="detalle.ProcedimientoId" class="form-control">
 
                                     @foreach (var item in listaProcedimientos)
                                     {
-                                        <option value="@item.Descripcion">@item.Descripcion</option>
+                                        <option value="@item.ProcedimientoId">@item.Descripcion</option>
                                     }
 
                                 </InputSelect>
@@ -168,68 +168,114 @@
 
 @code {
 
+    [Parameter]
+    public int FacturaId { get; set; }
+
     public Factura factura { get; set; } = new Factura();
     public FacturaDetalle detalle { get; set; } = new FacturaDetalle();
-    public List<Paciente> listaPacientes { get; set; } = new List<Paciente>();
-    public List<Procedimiento> listaProcedimientos { get; set; } = new List<Procedimiento>();
+    public List<Paciente>? listaPacientes { get; set; } = new List<Paciente>();
+    public List<Procedimiento>? listaProcedimientos { get; set; } = new List<Procedimiento>();
+    
+    
+    [Inject]
+    public FacturaBLL facturaBLL { get; set; }
+
+    [Inject]
+    public ProcedimientoBLL procedimientoBLL { get; set; }
+
+    [Inject]
+    public PacienteBLL pacienteBLL { get; set; } 
+
     protected override void OnInitialized()
     {
-
+        LlenarListaPacientes();
+        LlenarListaProcedimiento();
+        factura.FacturaId = FacturaId;
+        Buscar();
     }
 
     public void Buscar()
     {
-        /* if (this.producto.ProductoId > 0)
+        if (this.factura.FacturaId > 0)
         {
-        Productos encontrado = productosBLL.Buscar(this.producto.ProductoId);
 
-        if (encontrado != null)
-        {
-        this.producto = encontrado;
+            Factura encontrado = facturaBLL.Buscar(this.factura.FacturaId);
+
+            if (encontrado != null)
+            {
+                this.factura = encontrado;
+            }
+            else
+            {
+                toastService.ShowError("No se encontró la Factura...");
+            }
         }
-        else
-        {
-        toastService.ShowError("No se encontró el producto");
-        }
-        } */
     }
 
     private void RemoverFila(FacturaDetalle item)
     {
-        
+        this.factura.Detalle.Remove(item);
     }
 
     public void AgregarDetalle()
-    {}
-
+    {
+        LLenarDetalle();
+        this.factura.Detalle.Add(detalle);
+        NuevoDetalle();
+    }
+    
+    public void LLenarDetalle()
+    {
+        var procedimiento = procedimientoBLL.Buscar(detalle.ProcedimientoId);
+        
+        detalle.Procedimiento = procedimiento.Descripcion;
+        detalle.Precio = procedimiento.Precio;
+    } 
+    
     public void Nuevo()
     {
-        //producto = new Productos();
+        factura = new Factura();
+    }
+
+    public void NuevoDetalle()
+    {
+        detalle = new FacturaDetalle();
     }
 
     public void Guardar()
     {
-        /* if (productosBLL.Guardar(producto))
+        if (facturaBLL.Guardar(factura))
         {
-        Nuevo();
-        toastService.ShowInfo("Se guardó exitosamente");
-        }
-        else
-        toastService.ShowError("No se pudo guardar.");
-        */
-    }
-    public void Eliminar()
-    {
-        /* if (productosBLL.Eliminar(producto.ProductoId))
-        {
-        Nuevo();
-        toastService.ShowSuccess("Eliminación exitosa");
+            Nuevo();
+            toastService.ShowInfo("Se guardó exitosamente");
         }
         else
         {
-        toastService.ShowError("Eliminación fallida");
-        } */
+            toastService.ShowError("No se pudo guardar.");
+        } 
     }
 
+    public void Eliminar()
+    {
+        if (facturaBLL.Eliminar(factura.FacturaId))
+        {
+            Nuevo();
+            toastService.ShowSuccess("Eliminación exitosa");
+        }
+        else
+        {
+            toastService.ShowError("Eliminación fallida");
+        }
+    }
+
+    public void LlenarListaPacientes()
+    {
+        listaPacientes = pacienteBLL.GetList(t => true);
+    }
+
+    public void LlenarListaProcedimiento()
+    {
+        listaProcedimientos = procedimientoBLL.GetList(t => true);
+    }
 
 }
