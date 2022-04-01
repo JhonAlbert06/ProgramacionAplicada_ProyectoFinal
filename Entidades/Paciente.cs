@@ -4,6 +4,7 @@ namespace ProyectoFinal_JhonAlbert.Entidades
     public class Paciente
     {
         [Key]
+        [Range(0, int.MaxValue, ErrorMessage = "El ID debe estar en el rango de {1} y {2}.")]
         public int PacienteId { get; set; }
 
         [Required(ErrorMessage = "Es obligatorio introducir el Nombre")]
@@ -20,7 +21,6 @@ namespace ProyectoFinal_JhonAlbert.Entidades
 
         [Required(ErrorMessage = "Es obligatorio introducir el Telefono")]
         public string? Telefono { get; set; }
-        public int Edad { get; set; }
 
         [Required(ErrorMessage = "Se debe elegir un sexo")]
         // 1 Hombre  2 Mujer
@@ -38,8 +38,8 @@ namespace ProyectoFinal_JhonAlbert.Entidades
 
         public Paciente()
         {
-            Edad = 0;
             EstadoCivil = 0;
+            Sexo = 0;
         }
     }
 }
