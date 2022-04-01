@@ -42,7 +42,12 @@
                 <hr>
                 <hr>
 
-                @* ComboBox Productos *@
+                <div class="input-group mb-4">
+                    <span class="input-group-text" id="basic-addon2">Fecha</span>
+                    <InputDate readonly= class="form-control" @bind-Value="factura.FechaFactura" />
+                </div>
+
+                @* ComboBox Pacientes *@
 
                 <div class="input-group mb-4">
 
@@ -56,15 +61,18 @@
 
                     </InputSelect>
                     
-                    <span class="input-group-text" id="basic-addon2">Fecha</span>
-                    <InputDate readonly= class="form-control" @bind-Value="factura.FechaFactura" />
-                    
-                </div>
+                    <span class="input-group-text" id="basic-addon2">Aseguradora</span>
+                    <InputSelect id="SelectAseguradora" @bind-Value="factura.Aseguradora" class="form-control">
+                        
+                        <option></option>
 
-                @* Aseguradora *@
-                <div class="form-group col">
-                    <label>Aseguradora</label>
-                    <InputText class="form-control" @bind-Value="factura.Aseguradora" placeholder="ej; Senasa"/>
+                        @foreach (var item in listaAseguradora)
+                        {
+                            <option value="@item.Nombre">@item.Nombre</option>
+                        }
+
+                    </InputSelect>
+                    
                 </div>
 
                 <br>
@@ -83,7 +91,7 @@
                             @* Procedimiento *@
                             <div class="form-group col">
                                 <label>Procedimiento</label>
-                                <InputSelect id="SelectProductos" @bind-Value="detalle.ProcedimientoId" class="form-control">
+                                <InputSelect id="SelectProcedimiento" @bind-Value="detalle.ProcedimientoId" class="form-control">
 
                                     @foreach (var item in listaProcedimientos)
                                     {
@@ -175,7 +183,7 @@
     public FacturaDetalle detalle { get; set; } = new FacturaDetalle();
     public List<Paciente>? listaPacientes { get; set; } = new List<Paciente>();
     public List<Procedimiento>? listaProcedimientos { get; set; } = new List<Procedimiento>();
-    
+    public List<Aseguradora>? listaAseguradora { get; set; } = new List<Aseguradora>();
     
     [Inject]
     public FacturaBLL facturaBLL { get; set; }
@@ -186,10 +194,14 @@
     [Inject]
     public PacienteBLL pacienteBLL { get; set; } 
 
+    [Inject]
+    public AseguradoraBLL aseguradoraBLL { get; set; }
+
     protected override void OnInitialized()
     {
         LlenarListaPacientes();
         LlenarListaProcedimiento();
+        LlenarListaAseguradora();
         factura.FacturaId = FacturaId;
         Buscar();
     }
@@ -215,6 +227,7 @@
     private void RemoverFila(FacturaDetalle item)
     {
         this.factura.Detalle.Remove(item);
+        RestaMonto(item.ProcedimientoId);
     }
 
     public void AgregarDetalle()
@@ -230,6 +243,8 @@
         
         detalle.Procedimiento = procedimiento.Descripcion;
         detalle.Precio = procedimiento.Precio;
+
+        CalcularMonto(procedimiento.Precio);
     } 
     
     public void Nuevo()
@@ -278,4 +293,24 @@
         listaProcedimientos = procedimientoBLL.GetList(t => true);
     }
 
+    public void LlenarListaAseguradora()
+    {
+        listaAseguradora = aseguradoraBLL.GetList(t => true);
+    }
+
+    public void CalcularMonto(float monto)
+    {
+        factura.Monto += monto;
+    }
+
+    public void RestaMonto(int id)
+    {
+        var procedimiento = procedimientoBLL.Buscar(id);
+        var auxiliar = factura.Monto -= procedimiento.Precio;
+        
+        if (auxiliar < 0)
+        {
+            factura.Monto = 0;
+        }
+    }
 }
