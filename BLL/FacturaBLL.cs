@@ -45,7 +45,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                _contexto.Database.ExecuteSqlRaw($"DELETE FROM Detalle WHERE FacturaId={factura.PacienteId}");
+                _contexto.Database.ExecuteSqlRaw($"DELETE FROM Detalle WHERE FacturaId={factura.FacturaId}");
 
                 foreach (var Anterior in factura.Detalle)
                 {
