@@ -38,6 +38,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
                     var auxiliar = factura.Monto += _contexto.Procedimiento.Find(detalle.ProcedimientoId).Precio;
                 }
 
+                _contexto.Entry(factura).State = EntityState.Added;
                 paso = _contexto.SaveChanges() > 0;
             }
             catch (Exception)
