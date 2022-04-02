@@ -1,0 +1,209 @@
+@page "/C_Pacientes"
+
+@using ProyectoFinal_JhonAlbert.Entidades
+@using ProyectoFinal_JhonAlbert.BLL
+
+<EditForm Model="lista">
+
+    <DataAnnotationsValidator />
+
+    <div class="card">
+
+        <div class="card-header">
+            <h3>Consulta de Pacientes</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form>
+
+                <div class="input-group d-flex align-items-end">
+
+                    <select class="form-control col-2" @bind="Filtro">
+                        <option></option>
+                        <option value="0">Id</option>
+                        <option value="1">Nombre</option>
+                        <option value="2">Apellido</option>
+                        <option value="3">Direccion</option>
+                        <option value="4">Estado Civil</option>
+                        <option value="5">Sexo</option>
+                    </select>
+
+                    @if(Filtro == "5")
+                    {
+                        <div class="flex-fill mx-2">
+                            <label>Criterio: </label>
+                            <InputSelect id="SelectSexo" @bind-Value="Criterio" class="form-control">
+                                <option value="M">Hombre</option>
+                                <option value="F">Mujer</option>
+                            </InputSelect>
+                        </div>
+
+                    }else if(Filtro == "4")
+                    {
+                        <div class="flex-fill mx-2">
+                            <label>Criterio: </label>
+                            <InputSelect id="SelectEstadoCivil" @bind-Value="Criterio" class="form-control">
+                                <option value="Soltero">Soltero</option>
+                                <option value="Casado">Casado</option>
+                            </InputSelect>
+                        </div>
+
+                    }
+                    else{
+
+                        <div class="flex-fill mx-2">
+                            <label>Criterio: </label>
+                            <input type="text" class="form-control" @bind="Criterio" placeholder="Escriba Aqui" />
+                        </div>
+                    }
+
+
+                    <div class="flex-fill mx-2">
+                        <label>Desde</label>
+                        <InputDate class="form-control" @bind-Value="Desde" />
+                    </div>
+
+                    <div class="flex-fill mx-2">
+                        <label>Hasta</label>
+                        <InputDate class="form-control" @bind-Value="Hasta" />
+                    </div>
+
+
+                    <button type="button" class="btn btn-warning" @onclick="Buscar">
+                        <i class="oi oi-magnifying-glass mr-2" /> Buscar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <table class="table table-secondary">
+
+            <thead class="thead-dark">
+                <tr class="table-info">
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>Sexo</th>
+                    <th>Estado Civil</th>
+                    <th>Cedula</th>
+                    <th>Fecha de Nacimiento</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in lista)
+                {
+                    <tr>
+                        <td>@item.PacienteId</td>
+                        <td>@item.Nombre</td>
+                        <td>@item.Apellido</td>
+                        <td>@item.Email</td>
+                        <td>@item.Direccion</td>
+                        <td>@item.Telefono</td>
+                        <td>@item.Sexo</td>
+                        <td>@item.EstadoCivil</td>
+                        <td>@item.Cedula</td>
+                        <td>@item.FechaNacimiento?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Pacientes/@item.PacienteId"> 
+                                Ver
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</EditForm>
+
+
+
+@code {
+    public string? Filtro { get; set; }
+    public string? Criterio { get; set; }
+    public DateTime? Desde { get; set; } = null;
+    public DateTime? Hasta { get; set; } = null;
+    
+    [Inject]
+    public PacienteBLL pacientesBLL { get; set; }
+
+    public List<Paciente> lista { get; set; } = new List<Paciente>();
+
+    private void Buscar()
+    {
+
+        if (Criterio != null)
+        {
+            switch (Filtro)
+            {
+                case "0":
+                
+                    if (Desde != null || Hasta != null)
+                        lista = pacientesBLL.GetList(p => p.PacienteId == int.Parse(Criterio) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta) );
+                    else
+                        lista = pacientesBLL.GetList(p => p.PacienteId == int.Parse(Criterio) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta) );
+                
+                break;
+
+                case "1":
+
+                    if (Desde != null || Hasta != null)
+                        lista = pacientesBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                    else
+                        lista = pacientesBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                
+                break;
+
+                case "2":
+                
+                    if (Desde != null || Hasta != null)
+                        lista = pacientesBLL.GetList(p => p.Apellido.ToLower().Contains(Criterio.ToLower()) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                    else
+                        lista = pacientesBLL.GetList(p => p.Apellido.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                
+                break;
+
+                case "3":
+
+                    if (Desde != null || Hasta != null)
+                        lista = pacientesBLL.GetList(p => p.Direccion.ToLower().Contains(Criterio.ToLower()) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                    else
+                        lista = pacientesBLL.GetList(p => p.Direccion.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                
+                break;
+
+                case "4":
+                
+                    if (Desde != null || Hasta != null)
+                        lista = pacientesBLL.GetList(p => p.EstadoCivil.ToLower().Contains(Criterio.ToLower()) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                    else
+                        lista = pacientesBLL.GetList(p => p.EstadoCivil.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                
+                break;
+
+                case "5":
+                
+                    if (Desde != null || Hasta != null)
+                        lista = pacientesBLL.GetList(p => Char.ToString(p.Sexo).Contains(Criterio.ToLower()) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                    else
+                        lista = pacientesBLL.GetList(p => Char.ToString(p.Sexo).Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                
+                break;
+            }
+        }
+        else
+        {
+            lista = pacientesBLL.GetList(t => true);
+        }
+    }
+
+}
