@@ -91,9 +91,9 @@
                     @* Email *@
                     <div class="form-group col">
                         <label>Sexo </label>
-                        <InputSelect id="SelectProductos" @bind-Value="paciente.Sexo" class="form-control">
-                            <option value=1>Hombre</option>
-                            <option value=2>Mujer</option>
+                        <InputSelect id="SelectSexo" @bind-Value="paciente.Sexo" class="form-control">
+                            <option value="M">Hombre</option>
+                            <option value="F">Mujer</option>
                         </InputSelect>
                         <ValidationMessage For="@(() => paciente.Sexo)" />
                     </div>
@@ -106,9 +106,9 @@
                     @* Estado Civil *@                    
                     <div class="form-group col">
                         <label>Estado Civil</label>
-                        <InputSelect id="SelectProductos" @bind-Value="paciente.EstadoCivil" class="form-control">
-                            <option value=1>Soltero</option>
-                            <option value=2>Casado</option>
+                        <InputSelect id="SelectEstadoCivil" @bind-Value="paciente.EstadoCivil" class="form-control">
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
                         </InputSelect>
                         <ValidationMessage For="@(() => paciente.EstadoCivil)" />
                     </div>
