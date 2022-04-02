@@ -1,0 +1,123 @@
+@page "/C_Facturas"
+
+@using ProyectoFinal_JhonAlbert.Entidades
+@using ProyectoFinal_JhonAlbert.BLL
+
+<EditForm Model="lista">
+
+    <DataAnnotationsValidator />
+
+    <div class="card">
+
+        <div class="card-header">
+            <h3>Consulta de Facturas</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form>
+
+                <div class="input-group d-flex align-items-end">
+
+                    <select class="form-control col-2" @bind="Filtro">
+                        <option></option>
+                        <option value="0">Factura Id</option>
+                        <option value="1">Paciente Id</option>
+                        <option value="2">Aseguradora</option>
+                    </select>
+
+                    <div class="flex-fill mx-2">
+                        <label>Criterio: </label>
+                        <input type="text" class="form-control" @bind="Criterio" placeholder="Escriba Aqui" />
+                    </div>
+
+                    <button type="button" class="btn btn-warning" @onclick="Buscar">
+                        <i class="oi oi-magnifying-glass mr-2" /> Buscar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <table class="table table-secondary">
+
+            <thead class="thead-dark">
+                <tr class="table-info">
+                    <th></th>
+                    <th>Factura Id</th>
+                    <th>Paciente Id</th>
+                    <th>Aseguradora</th>
+                    <th>Monto</th>
+                    <th>Fecha de Creacion</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in lista)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Pacientes/@item.PacienteId"> 
+                                Ver Paciente
+                            </a>
+                        </td>
+                        <td>@item.PacienteId</td>
+                        <td>@item.FacturaId</td>
+                        <td>@item.Aseguradora</td>
+                        <td>@item.Monto</td>
+                        <td>@item.FechaFactura?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Procedimientos/@item.FacturaId"> 
+                                Ver
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</EditForm>
+
+
+
+@code {
+    public string? Filtro { get; set; }
+    public string? Criterio { get; set; }
+
+    [Inject]
+    public FacturaBLL facturaBLL { get; set; }
+
+    public List<Factura> lista { get; set; } = new List<Factura>();
+
+    private void Buscar()
+    {
+
+        if (Criterio != null)
+        {
+            switch (Filtro)
+            {
+                case "0":
+                    lista = facturaBLL.GetList(p => p.FacturaId == int.Parse(Criterio));
+                break;
+
+                case "1":
+                    lista = facturaBLL.GetList(p => p.PacienteId == int.Parse(Criterio));
+                break;
+
+                case "2":
+                    lista = facturaBLL.GetList(p => p.Aseguradora.ToLower().Contains(Criterio.ToLower()));
+                break;
+
+            }
+        }
+        else
+        {
+            lista = facturaBLL.GetList(t => true);
+        }
+    }
+
+}
