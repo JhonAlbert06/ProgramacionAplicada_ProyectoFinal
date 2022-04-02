@@ -24,11 +24,11 @@ namespace ProyectoFinal_JhonAlbert.Entidades
 
         [Required(ErrorMessage = "Se debe elegir un sexo")]
         // 1 Hombre  2 Mujer
-        public int Sexo { get; set; }
+        public char Sexo { get; set; }
 
         [Required(ErrorMessage = "Se debe elegir un estado civil")]
         // 1 Soltero  2 Casado
-        public int EstadoCivil { get; set; }
+        public string? EstadoCivil { get; set; }
 
         [Required(ErrorMessage = "Es obligatorio introducir la fecha de Nacimiento")]
         public DateTime? FechaNacimiento { get; set; }
@@ -36,10 +36,5 @@ namespace ProyectoFinal_JhonAlbert.Entidades
         [Required(ErrorMessage = "Es obligatorio introducir la Cedula")]
         public string? Cedula { get; set; }
 
-        public Paciente()
-        {
-            EstadoCivil = 0;
-            Sexo = 0;
-        }
     }
 }
