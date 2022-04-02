@@ -69,14 +69,14 @@
                     <div class="form-group col">
                         <label>Email </label>
                         <InputText class="form-control" @bind-Value="paciente.Email" 
-                            placeholder="ej; paquito02@gmail.com"/>
+                            placeholder="ej; paquito02@gmail.com" />
                         <ValidationMessage For="@(() => paciente.Email)" />
                     </div>
 
                     @* Direccion *@                    
                     <div class="form-group col">
                         <label>Direccion </label>
-                        <InputText class="form-control" @bind-Value="paciente.Direccion" data-bv-emailaddress-message="The value is not a valid email address"
+                        <InputText class="form-control" @bind-Value="paciente.Direccion"
                             placeholder="ej; Provincia/Ciudad/Calle" />
                         <ValidationMessage For="@(() => paciente.Direccion)" />
                     </div>
@@ -141,8 +141,7 @@
                     @* Fecha de Nacimiento *@
                     <div class="form-group col">
                         <label>Fecha de Nacimiento </label>
-                        <InputDate class="form-control" @bind-Value="paciente.FechaNacimiento"
-                            placeholder="ej; " />
+                        <InputDate class="form-control" @bind-Value="paciente.FechaNacimiento" />
                         <ValidationMessage For="@(() => paciente.FechaNacimiento)" />
                     </div>
 
@@ -237,7 +236,7 @@
         } 
     }
 
-    public bool ValidacionEmail(string email)
+    public bool ValidacionEmail()
     {
         Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-
         9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
