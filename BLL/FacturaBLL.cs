@@ -28,8 +28,17 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                if (_contexto.Factura.Add(factura) != null)
-                    paso = _contexto.SaveChanges() > 0;
+                _contexto.Factura.Add(factura);
+                
+                foreach (var detalle in factura.Detalle)
+                {
+                    _contexto.Entry(factura).State = EntityState.Added;
+                    _contexto.Entry(factura.Detalle).State = EntityState.Modified;
+
+                    var auxiliar = factura.Monto += _contexto.Procedimiento.Find(detalle.ProcedimientoId).Precio;
+                }
+
+                paso = _contexto.SaveChanges() > 0;
             }
             catch (Exception)
             {
@@ -45,6 +54,32 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
+                var Anterior = _contexto.Factura
+                .Where(x => x.FacturaId == factura.FacturaId)
+                .Include(x => x.Detalle)
+                .AsNoTracking()
+                .SingleOrDefault();
+
+                foreach (var detalle in Anterior.Detalle)
+                {
+                    var auxiliar = factura.Monto -= _contexto.Procedimiento.Find(detalle.ProcedimientoId).Precio;
+                }
+
+                _contexto.Database.ExecuteSqlRaw($"DELETE FROM FacturaDetalle WHERE FacturaId={factura.FacturaId}");
+
+                foreach (var item in factura.Detalle)
+                {
+                    _contexto.Entry(factura).State = EntityState.Added;
+                    _contexto.Entry(factura.Detalle).State = EntityState.Modified;
+
+                    var auxiliar = factura.Monto += _contexto.Procedimiento.Find(item.ProcedimientoId).Precio;
+                }
+                
+                _contexto.Entry(factura).State = EntityState.Modified;
+                paso = _contexto.SaveChanges() > 0;
+
+
+                /*
                 _contexto.Database.ExecuteSqlRaw($"DELETE FROM FacturaDetalle WHERE FacturaId={factura.FacturaId}");
 
                 foreach (var Anterior in factura.Detalle)
@@ -54,7 +89,8 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
                 _contexto.Entry(factura).State = EntityState.Modified;
 
-                paso = _contexto.SaveChanges() > 0;
+                paso = _contexto.SaveChanges() > 0; 
+                */
             }
             catch (Exception)
             {
