@@ -59,6 +59,8 @@ namespace ProyectoFinal_JhonAlbert.DAL
                 AseguradoraId = 8,
                 Nombre = "La Monumental"
             });
+
+            
         }
     }
 }
