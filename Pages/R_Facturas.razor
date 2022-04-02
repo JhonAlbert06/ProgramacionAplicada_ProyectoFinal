@@ -60,6 +60,7 @@
                         }
 
                     </InputSelect>
+                    <ValidationMessage For="@(() => factura.PacienteId)" />
                     
                     <span class="input-group-text" id="basic-addon2">Aseguradora</span>
                     <InputSelect id="SelectAseguradora" @bind-Value="factura.Aseguradora" class="form-control">
@@ -72,6 +73,7 @@
                         }
 
                     </InputSelect>
+                    <ValidationMessage For="@(() => factura.Aseguradora)" />
                     
                 </div>
 
@@ -99,6 +101,7 @@
                                     }
 
                                 </InputSelect>
+                                <ValidationMessage For="@(() => detalle.FacturaDetalleId)" />
                             </div>
 
                             <button type="button" class="btn btn-success col" @onclick="AgregarDetalle">
