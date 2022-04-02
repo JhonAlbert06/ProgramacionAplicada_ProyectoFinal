@@ -111,7 +111,10 @@
                         <td>@item.EstadoCivil</td>
                         <td>@item.Cedula</td>
                         <td>@item.FechaNacimiento?.ToString("dd/MM/yyyy")</td>
-                        <td><a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Pacientes/@item.PacienteId"> Ver</a>
+                        <td>
+                            <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Pacientes/@item.PacienteId"> 
+                                Ver
+                            </a>
                         </td>
                     </tr>
                 }
@@ -202,7 +205,5 @@
             lista = pacientesBLL.GetList(t => true);
         }
     }
-
-
 
 }
