@@ -146,7 +146,7 @@
                     <span class="input-group-text">
                         Monto 
                     </span>
-                    <InputNumber class="form-control" @bind-Value="factura.Monto" readonly />
+                    <InputNumber class="form-control" @bind-Value="this.Monto" readonly />
                 </div>
 
             </div>
@@ -181,6 +181,7 @@
 
     [Parameter]
     public int FacturaId { get; set; }
+    public float Monto { get; set;}
 
     public Factura factura { get; set; } = new Factura();
     public FacturaDetalle detalle { get; set; } = new FacturaDetalle();
@@ -309,11 +310,11 @@
     public void RestaMonto(int id)
     {
         var procedimiento = procedimientoBLL.Buscar(id);
-        var auxiliar = factura.Monto -= procedimiento.Precio;
+        var auxiliar = Monto -= procedimiento.Precio;
         
-        if (auxiliar < 0)
+        if (auxiliar <= 0)
         {
-            factura.Monto = 0;
+            Monto = 0;
         }
     }
 }
