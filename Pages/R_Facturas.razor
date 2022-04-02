@@ -229,8 +229,8 @@
 
     private void RemoverFila(FacturaDetalle item)
     {
-        this.factura.Detalle.Remove(item);
         RestaMonto(item.ProcedimientoId);
+        this.factura.Detalle.Remove(item);
     }
 
     public void AgregarDetalle()
