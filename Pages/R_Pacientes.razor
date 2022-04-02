@@ -59,18 +59,19 @@
                         <ValidationMessage For="@(() => paciente.Apellido)" />
                     </div>
 
-                    @* Email *@
-                    <div class="form-group col">
-                        <label>Email </label>
-                        <InputText class="form-control" @bind-Value="paciente.Email"
-                            placeholder="ej; paquito02@gmail.com" />
-                        <ValidationMessage For="@(() => paciente.Email)" />
-                    </div>
                 </div>
 
                 <br>
                 
                 <div class="row">
+
+                    @* Email *@
+                    <div class="form-group col">
+                        <label>Email </label>
+                        <InputText class="form-control" @bind-Value="paciente.Email" 
+                            placeholder="ej; paquito02@gmail.com"/>
+                        <ValidationMessage For="@(() => paciente.Email)" />
+                    </div>
 
                     @* Direccion *@                    
                     <div class="form-group col">
@@ -80,7 +81,14 @@
                         <ValidationMessage For="@(() => paciente.Direccion)" />
                     </div>
 
-                    @* Apellido *@
+                </div>
+                
+                <br>
+
+                <div class="row">
+
+                    
+                    @* Telefono *@
                     <div class="form-group col">
                         <label>Telefono </label>
                         <InputText class="form-control" @bind-Value="paciente.Telefono"
@@ -88,18 +96,16 @@
                         <ValidationMessage For="@(() => paciente.Telefono)" />
                     </div>
 
-                    @* Email *@
+                    @* Cedula *@
                     <div class="form-group col">
-                        <label>Sexo </label>
-                        <InputSelect id="SelectSexo" @bind-Value="paciente.Sexo" class="form-control">
-                            <option></option>
-                            <option value="M">Hombre</option>
-                            <option value="F">Mujer</option>
-                        </InputSelect>
-                        <ValidationMessage For="@(() => paciente.Sexo)" />
+                        <label>Cedula </label>
+                        <InputText class="form-control" @bind-Value="paciente.Cedula"
+                            placeholder="ej; 000-0000000-0" />
+                        <ValidationMessage For="@(() => paciente.Cedula)" />
                     </div>
+
                 </div>
-                
+
                 <br>
 
                 <div class="row">
@@ -115,6 +121,23 @@
                         <ValidationMessage For="@(() => paciente.EstadoCivil)" />
                     </div>
 
+                    @* Sexo *@
+                    <div class="form-group col">
+                        <label>Sexo </label>
+                        <InputSelect id="SelectSexo" @bind-Value="paciente.Sexo" class="form-control">
+                            <option></option>
+                            <option value="M">Hombre</option>
+                            <option value="F">Mujer</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => paciente.Sexo)" />
+                    </div>
+
+                </div>
+
+                <br>
+
+                <div class="row">
+
                     @* Fecha de Nacimiento *@
                     <div class="form-group col">
                         <label>Fecha de Nacimiento </label>
@@ -123,15 +146,8 @@
                         <ValidationMessage For="@(() => paciente.FechaNacimiento)" />
                     </div>
 
-                    @* Cedula *@
-                    <div class="form-group col">
-                        <label>Cedula </label>
-                        <InputText class="form-control" @bind-Value="paciente.Cedula"
-                            placeholder="ej; 000-0000000-0" />
-                        <ValidationMessage For="@(() => paciente.Cedula)" />
-                    </div>
-
                 </div>
+
             </div>
 
         </div>
@@ -219,6 +235,16 @@
         {
             toastService.ShowError("Eliminación fallida");
         } 
+    }
+
+    public bool ValidacionEmail(string email)
+    {
+        Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-
+        9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+        
+        bool isValidEmail = regex.IsMatch(paciente.Email);
+
+        return isValidEmail;
     }
 
 }
