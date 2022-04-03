@@ -49,7 +49,6 @@
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Descripcion</th>
-                    <th>Precio</th>
                 </tr>
             </thead>
 
@@ -103,10 +102,6 @@
 
                 case "2":
                     lista = procedimientoBLL.GetList(p => p.Descripcion.ToLower().Contains(Criterio.ToLower()));
-                break;
-
-                case "3":
-                    lista = procedimientoBLL.GetList(p => p.Precio == int.Parse(Criterio));
                 break;
             }
         }
