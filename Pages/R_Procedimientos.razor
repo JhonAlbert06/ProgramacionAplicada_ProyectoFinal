@@ -153,10 +153,10 @@
             else
                 toastService.ShowError("No se pudo guardar.");   
             }
-            catch (Exception)
-            {
-                toastService.ShowError("The instance of entity type 'Procedimiento' cannot be tracked because another instance with the same key value for {'ProcedimientoId'} is already being tracked.");   
-            }
+        catch (Exception)
+        {
+            toastService.ShowError("The instance of entity type 'Procedimiento' cannot be tracked because another instance with the same key value for {'ProcedimientoId'} is already being tracked.");   
+        }
     }
 
     public void Eliminar()
