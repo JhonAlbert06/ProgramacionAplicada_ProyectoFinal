@@ -83,8 +83,6 @@
 
     </div>
 
-
-
     @* Botones *@
     <div class="card-footer">
         <div class="form-group text-center" display: inline-block>
@@ -133,7 +131,8 @@
             }
             else
             {
-                toastService.ShowError("No se encontró el producto");
+                Nuevo();
+                toastService.ShowError("No se encontró el procedimiento");
             }
         }
     }
@@ -144,15 +143,22 @@
 
     public void Guardar()
     {
-        if (procedimientoBLL.Guardar(procedimiento))
+        try
         {
-            Nuevo();
-            toastService.ShowInfo("Se guardó exitosamente");
+            if (procedimientoBLL.Guardar(procedimiento))
+            {
+                Nuevo();
+                toastService.ShowInfo("Se guardó exitosamente");
+            }
+            else
+                toastService.ShowError("No se pudo guardar.");   
+            }
+        catch (Exception)
+        {
+            toastService.ShowError("The instance of entity type 'Procedimiento' cannot be tracked because another instance with the same key value for {'ProcedimientoId'} is already being tracked.");   
         }
-        else
-            toastService.ShowError("No se pudo guardar.");
-        
     }
+
     public void Eliminar()
     {
         if (procedimientoBLL.Eliminar(procedimiento.ProcedimientoId))

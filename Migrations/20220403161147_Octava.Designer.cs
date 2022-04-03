@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoFinal_JhonAlbert.DAL;
 
@@ -10,9 +11,10 @@ using ProyectoFinal_JhonAlbert.DAL;
 namespace ProyectoFinal_JhonAlbert.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20220403161147_Octava")]
+    partial class Octava
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
@@ -147,6 +149,7 @@ namespace ProyectoFinal_JhonAlbert.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasMaxLength(35)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("EstadoCivil")

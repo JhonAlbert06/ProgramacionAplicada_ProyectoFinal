@@ -10,12 +10,12 @@ namespace ProyectoFinal_JhonAlbert.Entidades
         
         [Required(ErrorMessage = "Es obligatorio introducir el Nombre")]
         [MinLength(3, ErrorMessage = "El Nombre debe tener al menos {1} caractéres.")]
-        [MaxLength(35, ErrorMessage = "EL Nombre no debe pasar de {1} caractéres.")]
+        [MaxLength(50, ErrorMessage = "EL Nombre no debe pasar de {1} caractéres.")]
         public string? Nombre { get; set; }
 
         [Required(ErrorMessage = "Es obligatorio introducir la descripcion")]
         [MinLength(3, ErrorMessage = "La Descripcion debe tener al menos {1} caractéres.")]
-        [MaxLength(300, ErrorMessage = "La Descripcion no debe pasar de {1} caractéres.")]
+        [MaxLength(500, ErrorMessage = "La Descripcion no debe pasar de {1} caractéres.")]
         public string? Descripcion { get; set; }                
 
         [Range(1, int.MaxValue, ErrorMessage = "El precio debe estar en el rango de {1} y {2}.")]

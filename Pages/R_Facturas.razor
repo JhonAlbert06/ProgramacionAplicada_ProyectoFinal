@@ -97,7 +97,7 @@
 
                                     @foreach (var item in listaProcedimientos)
                                     {
-                                        <option value="@item.ProcedimientoId">@item.Descripcion</option>
+                                        <option value="@item.ProcedimientoId">@item.Nombre</option>
                                     }
 
                                 </InputSelect>
@@ -222,7 +222,7 @@
             }
             else
             {
-                toastService.ShowError("No se encontró la Factura...");
+                toastService.ShowError("No se encontró la Factura");
             }
         }
     }
@@ -262,15 +262,22 @@
 
     public void Guardar()
     {
-        if (facturaBLL.Guardar(factura))
+        try
         {
-            Nuevo();
-            toastService.ShowInfo("Se guardó exitosamente");
+            if (facturaBLL.Guardar(factura))
+            {
+                Nuevo();
+                toastService.ShowInfo("Se guardó exitosamente");
+            }
+            else
+            {
+                toastService.ShowError("No se pudo guardar.");
+            }    
         }
-        else
+        catch (Exception)
         {
-            toastService.ShowError("No se pudo guardar.");
-        } 
+            toastService.ShowError("The instance of entity type 'Factura' cannot be tracked because another instance with the same key value for {'FacturaId'} is already being tracked.");
+        }
     }
 
     public void Eliminar()

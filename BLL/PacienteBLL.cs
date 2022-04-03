@@ -45,15 +45,6 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                //_contexto.Database.ExecuteSqlRaw($"DELETE FROM Detalle WHERE PacienteId={paciente.PacienteId}");
-
-                /* 
-                foreach (var Anterior in paciente.)
-                {
-                    _contexto.Entry(Anterior).State = EntityState.Added;
-                } 
-                */
-
                 _contexto.Entry(paciente).State = EntityState.Modified;
 
                 paso = _contexto.SaveChanges() > 0;

@@ -22,7 +22,7 @@
                     <select class="form-control col-2" @bind="Filtro">
                         <option></option>
                         <option value="0">Factura Id</option>
-                        <option value="1">Paciente Id</option>
+                        <option value="1">Paciente</option>
                         <option value="2">Aseguradora</option>
                     </select>
 
@@ -46,8 +46,8 @@
             <thead class="thead-dark">
                 <tr class="table-info">
                     <th></th>
+                    <th>Paciente</th>
                     <th>Factura Id</th>
-                    <th>Paciente Id</th>
                     <th>Aseguradora</th>
                     <th>Monto</th>
                     <th>Fecha de Creacion</th>
@@ -55,25 +55,32 @@
             </thead>
 
             <tbody>
+
                 @foreach (var item in lista)
                 {
-                    <tr>
-                        <td>
-                            <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Pacientes/@item.PacienteId"> 
-                                Ver Paciente
-                            </a>
-                        </td>
-                        <td>@item.PacienteId</td>
-                        <td>@item.FacturaId</td>
-                        <td>@item.Aseguradora</td>
-                        <td>@item.Monto</td>
-                        <td>@item.FechaFactura?.ToString("dd/MM/yyyy")</td>
-                        <td>
-                            <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Facturas/@item.FacturaId"> 
-                                Ver
-                            </a>
-                        </td>
-                    </tr>
+                    @foreach (var paciente in listaPaciente)
+                    {   
+                        @if(item.PacienteId == paciente.PacienteId)
+                        {
+                            <tr>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Pacientes/@item.PacienteId"> 
+                                        Ver Paciente
+                                    </a>
+                                </td>
+                                <td>@paciente.Nombre @paciente.Apellido</td>
+                                <td>@item.FacturaId</td>
+                                <td>@item.Aseguradora</td>
+                                <td>@item.Monto</td>
+                                <td>@item.FechaFactura?.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Facturas/@item.FacturaId"> 
+                                        Ver
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
                 }
             </tbody>
 
@@ -91,7 +98,16 @@
     [Inject]
     public FacturaBLL facturaBLL { get; set; }
 
+    [Inject]
+    public PacienteBLL pacienteBLL { get; set; }
+
     public List<Factura> lista { get; set; } = new List<Factura>();
+    public List<Paciente> listaPaciente { get; set; } = new List<Paciente>();
+
+    protected override void OnInitialized()
+    {
+        listaPaciente = pacienteBLL.GetList(t => true);
+    }
 
     private void Buscar()
     {
