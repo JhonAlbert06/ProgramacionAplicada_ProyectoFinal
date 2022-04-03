@@ -19,8 +19,8 @@ namespace ProyectoFinal_JhonAlbert.Entidades
         public string? Apellido { get; set; }  
 
         [Required(ErrorMessage = "Es obligatorio introducir el Email")]
-        [MinLength(3, ErrorMessage = "El Email debe tener al menos {1} caractéres.")]
-        [MaxLength(35, ErrorMessage = "El Email no debe pasar de {1} caractéres.")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", 
+        ErrorMessage = "El correo esta mal escrito")]
         public string? Email { get; set; }  
 
         [Required(ErrorMessage = "Es obligatorio introducir la Direccion")]
@@ -31,6 +31,7 @@ namespace ProyectoFinal_JhonAlbert.Entidades
         [Required(ErrorMessage = "Es obligatorio introducir el Telefono")]
         [MinLength(10, ErrorMessage = "El telefono debe tener al menos {1} caractéres.")]
         [MaxLength(15, ErrorMessage = "El telefono no debe pasar de {1} caractéres.")]
+        [Phone]
         public string? Telefono { get; set; }
 
         [Required(ErrorMessage = "Se debe elegir un sexo")]
