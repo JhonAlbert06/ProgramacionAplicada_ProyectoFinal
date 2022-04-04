@@ -7,6 +7,7 @@ namespace ProyectoFinal_JhonAlbert.Entidades
         [Key]
         [Range(0, int.MaxValue, ErrorMessage = "El ID debe estar en el rango de {1} y {2}.")]
         public int FacturaDetalleId { get; set; }
+        public int FacturaId { get; set; }
         public int ProcedimientoId { get; set; }
 
         [Required(ErrorMessage = "Es obligatorio introducir el Procedimiento")]

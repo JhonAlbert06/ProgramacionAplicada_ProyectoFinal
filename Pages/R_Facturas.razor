@@ -236,6 +236,7 @@
     public void AgregarDetalle()
     {
         LLenarDetalle();
+        detalle.FacturaId = factura.FacturaId;
         this.factura.Detalle.Add(detalle);
         NuevoDetalle();
     }
