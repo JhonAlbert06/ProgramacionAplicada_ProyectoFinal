@@ -94,6 +94,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
                 factura = _contexto.Factura
                     .Include(x => x.Detalle)
                     .Where(p => p.FacturaId == Id)
+                    .Include(x => x.Detalle)
                     .AsNoTracking()
                     .SingleOrDefault();
             }
