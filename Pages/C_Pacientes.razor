@@ -20,8 +20,7 @@
                 <div class="input-group d-flex align-items-end">
 
                     <select class="form-control col-2" @bind="Filtro">
-                        <option></option>
-                        <option value="0">Id</option>
+                        <option value="0" selected>Id</option>
                         <option value="1">Nombre</option>
                         <option value="2">Apellido</option>
                         <option value="3">Direccion</option>
@@ -147,55 +146,40 @@
             {
                 case "0":
                 
-                    if (Desde != null || Hasta != null)
-                        lista = pacientesBLL.GetList(p => p.PacienteId == int.Parse(Criterio) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta) );
+                    if (Criterio == null)
+                        lista = pacientesBLL.GetList(p => p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta);
                     else
                         lista = pacientesBLL.GetList(p => p.PacienteId == int.Parse(Criterio) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta) );
                 
                 break;
 
                 case "1":
-
-                    if (Desde != null || Hasta != null)
-                        lista = pacientesBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
-                    else
-                        lista = pacientesBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                    
+                    lista = pacientesBLL.GetList(p => p.Nombre.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
                 
                 break;
 
                 case "2":
                 
-                    if (Desde != null || Hasta != null)
-                        lista = pacientesBLL.GetList(p => p.Apellido.ToLower().Contains(Criterio.ToLower()) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
-                    else
-                        lista = pacientesBLL.GetList(p => p.Apellido.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                    lista = pacientesBLL.GetList(p => p.Apellido.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
                 
                 break;
 
                 case "3":
 
-                    if (Desde != null || Hasta != null)
-                        lista = pacientesBLL.GetList(p => p.Direccion.ToLower().Contains(Criterio.ToLower()) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
-                    else
-                        lista = pacientesBLL.GetList(p => p.Direccion.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                    lista = pacientesBLL.GetList(p => p.Direccion.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
                 
                 break;
 
                 case "4":
-                
-                    if (Desde != null || Hasta != null)
-                        lista = pacientesBLL.GetList(p => p.EstadoCivil.ToLower().Contains(Criterio.ToLower()) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
-                    else
-                        lista = pacientesBLL.GetList(p => p.EstadoCivil.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                    
+                    lista = pacientesBLL.GetList(p => p.EstadoCivil.ToLower().Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
                 
                 break;
 
                 case "5":
-                
-                    if (Desde != null || Hasta != null)
-                        lista = pacientesBLL.GetList(p => Char.ToString(p.Sexo).Contains(Criterio.ToLower()) && (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
-                    else
-                        lista = pacientesBLL.GetList(p => Char.ToString(p.Sexo).Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
+                    
+                    lista = pacientesBLL.GetList(p => Char.ToString(p.Sexo).Contains(Criterio.ToLower()) || (p.FechaNacimiento >= Desde && p.FechaNacimiento <= Hasta));
                 
                 break;
             }
