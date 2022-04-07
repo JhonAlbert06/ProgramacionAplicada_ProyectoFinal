@@ -5,8 +5,6 @@
 
 <EditForm Model="factura" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
-    <ValidationSummary />
-
 
     <div class="container-sm row-cols-md-1">
 
@@ -146,7 +144,7 @@
                     <span class="input-group-text">
                         Monto 
                     </span>
-                    <InputNumber class="form-control" @bind-Value="factura.Monto" readonly />
+                    <InputNumber class="form-control" @bind-Value="Monto" readonly />
                 </div>
 
             </div>
@@ -154,8 +152,6 @@
         </div>
 
     </div>
-
-
 
     @* Botones *@
     <div class="card-footer">
@@ -181,6 +177,7 @@
 
     [Parameter]
     public int FacturaId { get; set; }
+    public float Monto { get; set; }
 
     public Factura factura { get; set; } = new Factura();
     public FacturaDetalle detalle { get; set; } = new FacturaDetalle();
@@ -219,6 +216,7 @@
             if (encontrado != null)
             {
                 this.factura = encontrado;
+                Monto = factura.Monto;
             }
             else
             {
@@ -269,6 +267,7 @@
             {
                 Nuevo();
                 toastService.ShowInfo("Se guardó exitosamente");
+                Monto = 0;
             }
             else
             {
@@ -311,17 +310,17 @@
 
     public void CalcularMonto(float monto)
     {
-        factura.Monto += monto;
+        Monto += monto;
     }
 
     public void RestaMonto(int id)
     {
         var procedimiento = procedimientoBLL.Buscar(id);
-        var auxiliar = factura.Monto -= procedimiento.Precio;
+        var auxiliar = Monto -= procedimiento.Precio;
         
         if (auxiliar < 0)
         {
-            factura.Monto = 0;
+            Monto = 0;
         }
     }
 }

@@ -20,15 +20,58 @@
                 <div class="input-group d-flex align-items-end">
 
                     <select class="form-control col-2" @bind="Filtro">
-                        <option></option>
-                        <option value="0">Factura Id</option>
+                        <option value="0" selected>Factura Id</option>
                         <option value="1">Paciente</option>
                         <option value="2">Aseguradora</option>
                     </select>
 
+                    @if (Filtro == "1")
+                    {
+
+                        <div class="flex-fill mx-2">
+                            <label>Criterio: </label>
+                            <InputSelect id="SelectProductos" @bind-Value="Criterio" class="form-control">
+
+                                @foreach (var item in listaPaciente)
+                                {
+                                    <option value="@item.PacienteId">@item.Nombre @item.Apellido</option>
+                                }
+
+                            </InputSelect>
+                        </div>
+                    
+                    }
+                    else if(Filtro == "2"){
+
+                        <div class="flex-fill mx-2">
+                            <label>Criterio: </label>
+                            <InputSelect id="SelectProductos" @bind-Value="Criterio" class="form-control">
+
+                                @foreach (var item in listaAseguradora)
+                                {
+                                    <option value="@item.Nombre">@item.Nombre</option>
+                                }
+
+                            </InputSelect>
+                        </div>
+                    }
+                    else{
+                        
+                        <div class="flex-fill mx-2">
+                            <label>Criterio: </label>
+                            <input type="text" class="form-control" @bind="Criterio" placeholder="Escriba Aqui" />
+                        </div>
+                        
+                    }
+
                     <div class="flex-fill mx-2">
-                        <label>Criterio: </label>
-                        <input type="text" class="form-control" @bind="Criterio" placeholder="Escriba Aqui" />
+                        <label>Desde</label>
+                        <InputDate class="form-control" @bind-Value="Desde" />
+                    </div>
+
+                    <div class="flex-fill mx-2">
+                        <label>Hasta</label>
+                        <InputDate class="form-control" @bind-Value="Hasta" />
                     </div>
 
                     <button type="button" class="btn btn-warning" @onclick="Buscar">
@@ -93,7 +136,9 @@
 
 @code {
     public string? Filtro { get; set; }
-    public string? Criterio { get; set; }
+    public string? Criterio { get; set; } = null;
+    public DateTime? Desde { get; set; } = null;
+    public DateTime? Hasta { get; set; } = null;
 
     [Inject]
     public FacturaBLL facturaBLL { get; set; }
@@ -101,12 +146,17 @@
     [Inject]
     public PacienteBLL pacienteBLL { get; set; }
 
+    [Inject]
+    public AseguradoraBLL aseguradoraBLL { get; set; }
+
     public List<Factura> lista { get; set; } = new List<Factura>();
     public List<Paciente> listaPaciente { get; set; } = new List<Paciente>();
+    public List<Aseguradora> listaAseguradora { get; set; } = new List<Aseguradora>();
 
     protected override void OnInitialized()
     {
         listaPaciente = pacienteBLL.GetList(t => true);
+        listaAseguradora = aseguradoraBLL.GetList(t => true);
     }
 
     private void Buscar()
@@ -117,15 +167,18 @@
             switch (Filtro)
             {
                 case "0":
-                    lista = facturaBLL.GetList(p => p.FacturaId == int.Parse(Criterio));
+                    if (Criterio == null)
+                        lista = facturaBLL.GetList(p => p.FechaFactura >= Desde && p.FechaFactura <= Hasta);
+                    else
+                        lista = facturaBLL.GetList(p => p.FacturaId == int.Parse(Criterio) && (p.FechaFactura >= Desde && p.FechaFactura <= Hasta) );
                 break;
 
                 case "1":
-                    lista = facturaBLL.GetList(p => p.PacienteId == int.Parse(Criterio));
+                    lista = facturaBLL.GetList(p => p.PacienteId == int.Parse(Criterio) && (p.FechaFactura >= Desde && p.FechaFactura <= Hasta) );
                 break;
 
                 case "2":
-                    lista = facturaBLL.GetList(p => p.Aseguradora.ToLower().Contains(Criterio.ToLower()));
+                    lista = facturaBLL.GetList(p => p.Aseguradora.ToLower().Contains(Criterio.ToLower()) && (p.FechaFactura >= Desde && p.FechaFactura <= Hasta) );
                 break;
 
             }

@@ -28,8 +28,9 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                if (_contexto.Factura.Add(factura) != null)
-                    paso = _contexto.SaveChanges() > 0;
+                _contexto.Factura.Add(factura);
+                TotalSuma(factura);
+                paso = _contexto.SaveChanges() > 0;
             }
             catch (Exception)
             {
@@ -51,6 +52,9 @@ namespace ProyectoFinal_JhonAlbert.BLL
                 {
                     _contexto.Entry(Anterior).State = EntityState.Added;
                 }
+                
+                TotalResta(factura);
+                TotalSuma(factura);
 
                 _contexto.Entry(factura).State = EntityState.Modified;
 
@@ -141,6 +145,28 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             return lista;
         }
-       
+
+        private void TotalSuma(Factura factura)
+        {
+            foreach (var Detalle in factura.Detalle)
+            {
+                _contexto.Entry(Detalle).State = EntityState.Added;
+                factura.Monto += Detalle.Precio;
+                _contexto.Procedimiento.Find(Detalle.ProcedimientoId).TotalVendido += Detalle.Precio;
+                _contexto.Procedimiento.Find(Detalle.ProcedimientoId).CantidadVendido++;
+            }
+        }
+
+        private void TotalResta(Factura factura)
+        {
+            foreach (var Detalle in factura.Detalle)
+            {
+                _contexto.Entry(Detalle).State = EntityState.Added;
+                factura.Monto -= Detalle.Precio;
+                _contexto.Procedimiento.Find(Detalle.ProcedimientoId).TotalVendido -= Detalle.Precio;
+                _contexto.Procedimiento.Find(Detalle.ProcedimientoId).CantidadVendido--;
+            }
+        }
+
     }
 }
