@@ -177,6 +177,7 @@
 
     [Parameter]
     public int FacturaId { get; set; }
+    public float Monto { get; set; }
 
     public Factura factura { get; set; } = new Factura();
     public FacturaDetalle detalle { get; set; } = new FacturaDetalle();
@@ -307,10 +308,8 @@
 
     public void CalcularMonto(float monto)
     {
-        factura.Monto += monto;
+        Monto += monto;
     }
-
-    public float Monto { get; set; }
 
     public void RestaMonto(int id)
     {
