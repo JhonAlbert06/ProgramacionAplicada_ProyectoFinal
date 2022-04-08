@@ -75,6 +75,8 @@ namespace ProyectoFinal_JhonAlbert.BLL
             {
                 var factura = _contexto.Factura.Find(Id);
 
+                TotalResta(factura);
+
                 if (factura != null)
                 {
                     _contexto.Factura.Remove(factura);
