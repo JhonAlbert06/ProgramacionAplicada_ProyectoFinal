@@ -136,9 +136,9 @@
 
 @code {
     public string? Filtro { get; set; }
-    public string? Criterio { get; set; } = null;
-    public DateTime? Desde { get; set; } = null;
-    public DateTime? Hasta { get; set; } = null;
+    public string? Criterio { get; set; }
+    public DateTime? Desde { get; set; }
+    public DateTime? Hasta { get; set; }
 
     [Inject]
     public FacturaBLL facturaBLL { get; set; }
@@ -168,17 +168,47 @@
             {
                 case "0":
                     if (Criterio == null)
+                    {
                         lista = facturaBLL.GetList(p => p.FechaFactura >= Desde && p.FechaFactura <= Hasta);
+                    }
+                    else if (Criterio == null && Hasta == null)
+                    {
+                        lista = facturaBLL.GetList(p => p.FechaFactura >= Desde);
+                    }
                     else
-                        lista = facturaBLL.GetList(p => p.FacturaId == int.Parse(Criterio) && (p.FechaFactura >= Desde && p.FechaFactura <= Hasta) );
+                    {   
+                        lista = facturaBLL.GetList(p => p.FacturaId == int.Parse(Criterio) && (p.FechaFactura >= Desde || p.FechaFactura <= Hasta) );
+                    }
                 break;
 
                 case "1":
-                    lista = facturaBLL.GetList(p => p.PacienteId == int.Parse(Criterio) && (p.FechaFactura >= Desde && p.FechaFactura <= Hasta) );
+                    if (Criterio == null)
+                    {
+                        lista = facturaBLL.GetList(p => p.FechaFactura >= Desde && p.FechaFactura <= Hasta);
+                    }
+                    else if (Criterio == null && Hasta == null)
+                    {
+                        lista = facturaBLL.GetList(p => p.FechaFactura >= Desde);
+                    }
+                    else
+                    {
+                        lista = facturaBLL.GetList(p => pacienteBLL.Buscar(p.PacienteId).Nombre.ToLower().Contains(Criterio.ToLower()) && (p.FechaFactura >= Desde || p.FechaFactura <= Hasta) );
+                    }
                 break;
 
                 case "2":
-                    lista = facturaBLL.GetList(p => p.Aseguradora.ToLower().Contains(Criterio.ToLower()) && (p.FechaFactura >= Desde && p.FechaFactura <= Hasta) );
+                    if (Criterio == null)
+                    {
+                        lista = facturaBLL.GetList(p => p.FechaFactura >= Desde && p.FechaFactura <= Hasta);
+                    }
+                    else if (Criterio == null && Hasta == null)
+                    {
+                        lista = facturaBLL.GetList(p => p.FechaFactura >= Desde);
+                    }
+                    else
+                    {
+                        lista = facturaBLL.GetList(p => p.Aseguradora.ToLower().Contains(Criterio.ToLower()) && (p.FechaFactura >= Desde && p.FechaFactura <= Hasta) );
+                    }
                 break;
 
             }
