@@ -28,8 +28,8 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                _contexto.Factura.Add(factura);
                 TotalSuma(factura);
+                _contexto.Factura.Add(factura);
                 paso = _contexto.SaveChanges() > 0;
             }
             catch (Exception)
@@ -46,15 +46,16 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
+                
+                TotalResta(factura);
+                TotalSuma(factura);
+
                 _contexto.Database.ExecuteSqlRaw($"DELETE FROM FacturaDetalle WHERE FacturaId={factura.FacturaId}");
 
                 foreach (var Anterior in factura.Detalle)
                 {
                     _contexto.Entry(Anterior).State = EntityState.Added;
                 }
-                
-                TotalResta(factura);
-                TotalSuma(factura);
 
                 _contexto.Entry(factura).State = EntityState.Modified;
 
@@ -75,10 +76,9 @@ namespace ProyectoFinal_JhonAlbert.BLL
             {
                 var factura = _contexto.Factura.Find(Id);
 
-                TotalResta(factura);
-
                 if (factura != null)
                 {
+                    TotalResta(factura);
                     _contexto.Factura.Remove(factura);
                     paso = _contexto.SaveChanges() > 0;
                 }
