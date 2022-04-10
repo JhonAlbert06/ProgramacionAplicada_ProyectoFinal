@@ -24,7 +24,7 @@ namespace ProyectoFinal_JhonAlbert.Entidades
 
         public Factura()
         {
-            FechaFactura = DateTime.Now;
+            FechaFactura = DateTime.Today;
             PacienteId = 0;
             Monto = 0;
         }
