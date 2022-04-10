@@ -47,8 +47,8 @@ namespace ProyectoFinal_JhonAlbert.BLL
             try
             {
                 
-                TotalResta(factura);
                 TotalSuma(factura);
+                TotalResta(factura);
 
                 _contexto.Database.ExecuteSqlRaw($"DELETE FROM FacturaDetalle WHERE FacturaId={factura.FacturaId}");
 
@@ -163,7 +163,7 @@ namespace ProyectoFinal_JhonAlbert.BLL
         {
             foreach (var Detalle in factura.Detalle)
             {
-                _contexto.Entry(Detalle).State = EntityState.Added;
+                _contexto.Entry(Detalle).State = EntityState.Modified;
                 factura.Monto -= Detalle.Precio;
                 _contexto.Procedimiento.Find(Detalle.ProcedimientoId).TotalVendido -= Detalle.Precio;
                 _contexto.Procedimiento.Find(Detalle.ProcedimientoId).CantidadVendido--;
