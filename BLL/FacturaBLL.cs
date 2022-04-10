@@ -46,9 +46,6 @@ namespace ProyectoFinal_JhonAlbert.BLL
 
             try
             {
-                
-                TotalSuma(factura);
-                TotalResta(factura);
 
                 _contexto.Database.ExecuteSqlRaw($"DELETE FROM FacturaDetalle WHERE FacturaId={factura.FacturaId}");
 
@@ -56,7 +53,10 @@ namespace ProyectoFinal_JhonAlbert.BLL
                 {
                     _contexto.Entry(Anterior).State = EntityState.Added;
                 }
-
+                
+                TotalSuma(factura);
+                TotalResta(factura);
+                
                 _contexto.Entry(factura).State = EntityState.Modified;
 
                 paso = _contexto.SaveChanges() > 0;
