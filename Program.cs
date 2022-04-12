@@ -18,7 +18,7 @@ builder.Services.AddServerSideBlazor();
 
 
 builder.Services.AddDbContext<Contexto>(options => 
-    options.UseSqlite(builder.Configuration.GetConnectionString("ConStr"))    
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))    
 ); 
 
 builder.Services.AddBlazoredToast();
